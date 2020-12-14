@@ -7,6 +7,8 @@
 include('head.php');
 include('funciones/utilidades.php');
 
+//llamamos las variables globales
+require_once('global_var.php');
 
 $pagina = 'configuracion';
 
@@ -180,7 +182,7 @@ $pagina = 'configuracion';
                                                                                 if(!empty($row['logo']))
                                                                                 {
                                                                                     ?>
-                                                                                    <img src="assets/layouts/layout/img/<?php echo $row['logo'];?>" alt=""/>
+                                                                                    <img src="<?php echo $GLOBALS['server'];?>/assets/layouts/layout/img/<?php echo $row['logo'];?>" alt=""/>
                                                                                     <?php
                                                                                 }
                                                                                 else

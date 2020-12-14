@@ -4,6 +4,9 @@ include('../conexion.php');
 include('../includes/parametros.php');
 include('../funciones/fechas.php');
 
+//llamamos las variables globales
+require_once('../global_var.php');
+
 //CONSULTA LA CEDULA Y DEVUELVE EL NOMBRE
 function consulta_usuarios($id)
 {
@@ -120,7 +123,7 @@ else {
     	$i++;
     }
 
-    $to = 'dir_admin@bihomedis.com';
+    $to = $GLOBALS['mail_to'];
 	$subject = "PROCESAR PEDIDO No. ".$row['idpedido'];
 
 	$htmlContent = '
@@ -289,7 +292,7 @@ else {
 	        <p><b>Realizado por: / '.$usuario[0].'></p>
 	        <p><b>Estado:</b> '.estados_pedidos($row['estadopedido']).'</p>
 	    </address>
-	    <span><img src="http://www.bihomedis.com/intranet/assets/layouts/layout/img/'.$_SESSION["logo_cliente"].'" alt="" /></span>
+	    <span><img src="'.$GLOBALS['server'].'/assets/layouts/layout/img/'.$_SESSION["logo_cliente"].'" alt="" /></span>
 	</header>
 
 	<article>
@@ -359,9 +362,9 @@ else {
 
 
 	// Additional headers
-	$headers .= 'From: BIHOMEDIS <info@bihomedis.com>' . "\r\n";
+	$headers .= 'From: '.$GLOBALS['company'].' <'.$GLOBALS['mail_from'].'>' . "\r\n";
 	//$headers .= 'Cc: desarollo@imatiml.com'. "\r\n";
-    $headers .= "Bcc: auxiliar@bihomedis.com,logistica@bihomedis.com,dir_admin@bihomedis.com$correo_cucuta\r\n"; 
+    $headers .= "Bcc: ".$GLOBALS['mail_to1'].",".$GLOBALS['mail_to2'].",".$GLOBALS['mail_to3']."$correo_cucuta\r\n"; 
 
 
 	// Send email
