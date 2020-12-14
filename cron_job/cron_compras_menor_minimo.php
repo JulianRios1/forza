@@ -1,6 +1,10 @@
 <?php 
 include_once('../conexion.php');
 include_once('../funciones/fechas.php');
+
+//llamamos las variables globales
+require_once('../global_var.php');
+
 $fecha_actual=date('Y-m-d');
 
 //CONSULTAMOS EL MENSAJE DE ESTE EMAIL
@@ -32,7 +36,7 @@ while($row = mysqli_fetch_array($resultado))
 
 			$to = $row['mail'];
 			//$to = 'sauloandres@gmail.com';
-			$subject = utf8_decode("En bihomedis queremos apoyar tu crecimiento");
+			$subject = utf8_decode("En ".$GLOBALS['company']." queremos apoyar tu crecimiento");
 			$des_email = $row_msg['descripcion'];
 
 			$htmlContent = '
@@ -44,7 +48,7 @@ while($row = mysqli_fetch_array($resultado))
 			        <!-- Facebook sharing information tags -->
 			        <meta property="og:title" content="*|MC:SUBJECT|*" />
 			        
-			        <title>En bihomedis te extrañamos</title>
+			        <title>En '.$GLOBALS['company'].' te extrañamos</title>
 					<style type="text/css">
 						/* Client-specific Styles */
 						#outlook a{padding:0;} /* Force Outlook to provide a "view in browser" button. */
@@ -407,7 +411,7 @@ while($row = mysqli_fetch_array($resultado))
 					</style>
 				</head>
 			    <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
-			    <img src="http://bihomedis.com/intranet/tracking_email.php?id='.$row["usuario_id"].'&des='.$des_email.'"/>
+			    <img src="'.$GLOBALS['server'].'/tracking_email.php?id='.$row["usuario_id"].'&des='.$des_email.'"/>
 			    	<center>
 			        	<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="backgroundTable">
 			            	<tr>
@@ -421,7 +425,7 @@ while($row = mysqli_fetch_array($resultado))
 			                                            <td class="headerContent">
 			                                            
 			                                            	<!-- // Begin Module: Standard Header Image \\ -->
-			                                            	<img src="http://www.bihomedis.com/imagenes/logo_grande.png" style="max-width:600px;margin-top:10px" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
+			                                            	<img src="'.$GLOBALS['server'].'/assets/layouts/layout/img/logo_grande.png" style="max-width:600px;margin-top:10px" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
 			                                            	<!-- // End Module: Standard Header Image \\ -->
 			                                            
 			                                            </td>
@@ -457,7 +461,7 @@ while($row = mysqli_fetch_array($resultado))
 			                                                            	<tr>
 			                                                                	<td valign="middle" class="templateButtonContent">
 			                                                                    	<div mc:edit="std_content02">
-			                                                                        	<a href="http://www.bihomedis.com/intranet" target="_blank">Confirmar</a>
+			                                                                        	<a href="'.$GLOBALS['server'].'" target="_blank">Confirmar</a>
 			                                                                        </div>
 			                                                                    </td>
 			                                                                </tr>
@@ -490,7 +494,7 @@ while($row = mysqli_fetch_array($resultado))
 																			<br />
 																			<strong>Contáctanos a:</strong>
 																			<br />
-																			info@bihomedis.com 
+																			'.$GLOBALS['mail_from'].' 
 			                                                            </div>
 			                                                        </td>
 			                                                    </tr>
@@ -518,7 +522,7 @@ while($row = mysqli_fetch_array($resultado))
 			$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
 			// Additional headers
-			$headers .= 'From: BIHOMEDIS <info@bihomedis.com>' . "\r\n";
+			$headers .= 'From: '.$GLOBALS['company'].' <'.$GLOBALS['mail_from'].'>' . "\r\n";
 			//$headers .= 'Cc: sauloandres@gmail.com' . "\r\n";
 
 			

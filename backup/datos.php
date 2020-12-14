@@ -7,6 +7,9 @@ $dbname = 'bihomedis_web';*/
 
 include('../conexion.php');
 
+//llamamos las variables globales
+require_once('../global_var.php');
+
 //Connects to mysql server
 $connessione = @mysql_connect($hostname,$bd_usuario,$bd_clave);
 
@@ -58,7 +61,7 @@ $path = '';
 $file = $nombre_zip;
 
 $mailto = 'backups@sacompsystem.com';
-$subject = 'Backup Base de datos Forza Bihomedis';
+$subject = 'Backup Base de datos Forza '.$GLOBALS['company'];
 $message = 'Registros de la base de datos de la fecha '.date('Y/m/d');
 
 $content = file_get_contents($file);

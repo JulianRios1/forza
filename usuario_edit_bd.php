@@ -2,6 +2,9 @@
 @session_start();
 include('conexion.php');
 
+//llamamos las variables globales
+require_once('global_var.php');
+
 extract($_POST);
 $contrasena = '';
 
@@ -103,7 +106,7 @@ if(isset($tipo_documento))
                 <!-- Facebook sharing information tags -->
                 <meta property="og:title" content="*|MC:SUBJECT|*" />
                 
-                <title>En bihomedis te extrañamos</title>
+                <title>En '.$GLOBALS['company'].' te extrañamos</title>
             <style type="text/css">
               /* Client-specific Styles */
               #outlook a{padding:0;} /* Force Outlook to provide a "view in browser" button. */
@@ -480,7 +483,7 @@ if(isset($tipo_documento))
                                                     <td class="headerContent">
                                                     
                                                       <!-- // Begin Module: Standard Header Image \\ -->
-                                                      <img src="http://www.bihomedis.com/imagenes/logo_grande.png" style="max-width:600px;margin-top:10px" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
+                                                      <img src="'.$GLOBALS['server'].'/assets/layouts/layout/img/logo_grande.png" style="max-width:600px;margin-top:10px" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
                                                       <!-- // End Module: Standard Header Image \\ -->
                                                     
                                                     </td>
@@ -516,7 +519,7 @@ if(isset($tipo_documento))
                                                                       <tr>
                                                                           <td valign="middle" class="templateButtonContent">
                                                                               <div mc:edit="std_content02">
-                                                                                  <a href="http://www.bihomedis.com/intranet" target="_blank">Confirmar</a>
+                                                                                  <a href="'.$GLOBALS['server'].'" target="_blank">Confirmar</a>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -549,7 +552,7 @@ if(isset($tipo_documento))
                                         <br />
                                         <strong>Contáctanos a:</strong>
                                         <br />
-                                        info@bihomedis.com 
+                                        '.$GLOBALS['mail_from'].' 
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -576,7 +579,7 @@ if(isset($tipo_documento))
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
         // Additional headers
-        $headers .= 'From: BIHOMEDIS <info@bihomedis.com>' . "\r\n";
+        $headers .= 'From: '.$GLOBALS['company'].' <'.$GLOBALS['mail_from'].'>' . "\r\n";
         //$headers .= 'Cc: sauloandres@gmail.com' . "\r\n";
 
         mail($to,$subject,$htmlContent,$headers);

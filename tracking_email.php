@@ -1,6 +1,9 @@
 <?php 
 include('conexion.php');
 
+//llamamos las variables globales
+require_once('global_var.php');
+
 extract($_GET);
 
 function GetUserIP() {
@@ -43,5 +46,5 @@ $headers .= 'From: BIHOMEDIS <info@bihomedis.com>' . "\r\n";
 
 // Send email
 mail($to,$subject,$htmlContent,$headers);*/
-header ("Location: http://www.bihomedis.com/assets/layouts/layout/img/imagen_correo.jpg");
+header ("Location: ".$GLOBALS['server']."/assets/layouts/layout/img/imagen_correo.jpg");
 ?>
