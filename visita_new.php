@@ -204,6 +204,21 @@ extract($_GET);
                                                                         </div>
                                                                     </div>
 
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-2">Prioridad</label>
+                                                                            <div class="col-md-10">
+                                                                                <select name="prioridad" id="prioridad" class="form-control">
+                                                                                    <option value="">-Seleccione-</option>
+                                                                                    <option value="MA">Muy Alta</option>
+                                                                                    <option value="A">Alta</option>
+                                                                                    <option value="M">Media</option>
+                                                                                    <option value="B">Baja</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
                                                                 </div>                                                                
                                                             </div>
                                                         </div>
@@ -295,6 +310,9 @@ extract($_GET);
                     ignore: "", // validate all fields including form hidden input
                     rules: {
                         contacto: {
+                            required: true
+                        },
+                        prioridad: {
                             required: true
                         },
                         accion: {

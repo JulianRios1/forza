@@ -36,7 +36,7 @@ if(isset($observacion))
     $fecha_visita = date('Y-m-d');
   }
 
-  $insertar = "INSERT INTO `visitas` (`usuario_id`, `fecha`, `hora`, `literatura`, `obsequios`, `muestra`, `observacion`,`accion`,`id_vendedor`, `contacto`) VALUES ($hdd_id, '$fecha_visita', CURTIME(), '$literatura', '$obsequios', '$productos', '$observacion', '$accion', ".$_SESSION["idusuario"].", $contacto)";
+  $insertar = "INSERT INTO `visitas` (`usuario_id`, `fecha`, `hora`, `literatura`, `obsequios`, `muestra`, `observacion`,`accion`,`id_vendedor`, `contacto`, `prioridad`) VALUES ($hdd_id, '$fecha_visita', CURTIME(), '$literatura', '$obsequios', '$productos', '$observacion', '$accion', ".$_SESSION["idusuario"].", $contacto, '$prioridad')";
 
 
   if($mysqli->query($insertar))

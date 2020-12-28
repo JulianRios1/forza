@@ -138,6 +138,7 @@ $resultado_agenda = $mysqli->query("SELECT a.id, UPPER(CONCAT_WS(' ',u.nom,u.ape
                                                     </select>
                                                 </div>
                                             </div>
+
                                             <div class="form-group">
                                                 <label for="start" class="col-sm-2 control-label">Inicio</label>
                                                 <div class="col-md-10">
@@ -172,15 +173,21 @@ $resultado_agenda = $mysqli->query("SELECT a.id, UPPER(CONCAT_WS(' ',u.nom,u.ape
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="form-group">
-                                                            <label for="title" class="col-sm-2 control-label">Medico</label>
+                                                            <label for="title" class="col-sm-2 control-label">Médico</label>
                                                             <div class="col-sm-10">
-                                                                <input type="text" name="title" class="form-control" id="title" readonly>
+                                                                <input type="text" name="medico" class="form-control" id="medico" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="title" class="col-sm-2 control-label">Medico</label>
+                                                            <label for="title" class="col-sm-2 control-label">Vendedor</label>
                                                             <div class="col-sm-10">
-                                                                <textarea name="obs" id="obs" class="form-control" readonly></textarea>
+                                                                <input type="text" name="vendedor" class="form-control" id="vendedor" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="title" class="col-sm-2 control-label">Observación</label>
+                                                            <div class="col-sm-10">
+                                                                <textarea name="observacion" id="observacion" class="form-control" readonly></textarea>
                                                             </div> 
                                                         </div>
                                                         <div class="form-group">
@@ -304,7 +311,9 @@ $resultado_agenda = $mysqli->query("SELECT a.id, UPPER(CONCAT_WS(' ',u.nom,u.ape
                     element.bind('dblclick', function() {
                         $('#ModalEdit #hdd_id').val(event.id);
                         $('#ModalEdit #title').val(event.title);
-                        $('#ModalEdit #obs').val(event.obs);
+                        $('#ModalEdit #medico').val(event.medico);
+                        $('#ModalEdit #vendedor').val(event.vendedor);
+                        $('#ModalEdit #observacion').val(event.observacion);
                         $('#ModalEdit #inicio').val(event.start);
                         $('#ModalEdit #fin').val(event.end);
                         $('#ModalEdit').modal('show');
@@ -342,7 +351,9 @@ $resultado_agenda = $mysqli->query("SELECT a.id, UPPER(CONCAT_WS(' ',u.nom,u.ape
                     {
                         id: '<?php echo $events['id']; ?>',
                         title: '<?php echo $events['cliente'].' ('.$usuario[0].')'; ?>',
-                        obs: '<?php echo $events['observacion']; ?>',
+                        medico: '<?php echo $events['cliente']; ?>',
+                        vendedor: '<?php echo $usuario[0]; ?>',
+                        observacion: '<?php echo $events['observacion']; ?>',
                         start: '<?php echo $start; ?>',
                         end: '<?php echo $end; ?>',
                         color: '<?php echo $events['color']; ?>',
