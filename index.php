@@ -343,41 +343,165 @@ $pagina = 'inicio';
                                 </div>
                                 
                                 <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_zona_ma" data-toggle="tab">Prioridad Muy Alta</a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_zona_a" data-toggle="tab">Alta</a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_zona_m" data-toggle="tab">Media</a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_zona_b" data-toggle="tab">Baja</a>
+                                        </li>
+                                    </ul>
                                     <div class="scroller" style="height: 320px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
                                         <div class="tab-content">
-                                            <?php
-                                            $resultado = $mysqli->query("SELECT v.id, v.usuario_id, v.id_vendedor, v.observacion, v.fecha, v.hora, z.des AS zona, u.avatar  FROM visitas v JOIN medicos m ON v.usuario_id = m.usuario_id JOIN zonas z ON m.zona = z.id JOIN usuarios u ON m.usuario_id = u.id WHERE v.estado = 0 ORDER BY v.fecha DESC"); 
-                                            
-                                            while($row = mysqli_fetch_array($resultado))
-                                            {
-                                                $usuario = explode(";", consulta_usuarios($row['usuario_id']));
-                                                $vendedor = explode(";", consulta_usuarios($row['id_vendedor']));
-                                            ?>
-                                            <div class="mt-comments">
-                                                <div class="mt-comment">
-                                                    <div class="mt-comment-img">
-                                                        <img src="assets/avatars/img/<?php echo $usuario[1];?>" /> </div>
-                                                    <div class="mt-comment-body">
-                                                        <div class="mt-comment-info">
-                                                            <span class="mt-comment-author"><?php echo $usuario[0].' (Zona '.$row['zona'].')'?></span>
-                                                            <span class="mt-comment-date"><?php echo calcula_tiempo(strtotime(date($row['fecha'].' '.$row['hora'])));?></span>
-                                                        </div>
-                                                        <?php echo date($row['fecha'].' '.$row['hora']) ?>
-                                                        <div class="mt-comment-text"> <?php echo $row['observacion']; ?> </div>
-                                                        <div class="mt-comment-details">
-                                                            <span class="mt-comment-status mt-comment-status-pending"><?php echo $vendedor[0]; ?></span>
-                                                            <ul class="mt-comment-actions">
-                                                                <li>
-                                                                    <a href="visita_view.php?id_visita=<?php echo $row['id']?>">Visualizar</a>
-                                                                </li>
-                                                            </ul>
+                                            <div class="tab-pane active" id="tab_zona_ma">
+                                                <?php
+                                                $resultado = $mysqli->query("SELECT v.id, v.usuario_id, v.id_vendedor, v.observacion, v.fecha, v.hora, z.des AS zona, u.avatar  FROM visitas v JOIN medicos m ON v.usuario_id = m.usuario_id JOIN zonas z ON m.zona = z.id JOIN usuarios u ON m.usuario_id = u.id WHERE v.estado = 0 AND prioridad = 'MA' ORDER BY v.fecha DESC"); 
+                                                
+                                                while($row = mysqli_fetch_array($resultado))
+                                                {
+                                                    $usuario = explode(";", consulta_usuarios($row['usuario_id']));
+                                                    $vendedor = explode(";", consulta_usuarios($row['id_vendedor']));
+                                                ?>
+                                                <div class="mt-comments">
+                                                    <div class="mt-comment">
+                                                        <div class="mt-comment-img">
+                                                            <img src="assets/avatars/img/<?php echo $usuario[1];?>" /> </div>
+                                                        <div class="mt-comment-body">
+                                                            <div class="mt-comment-info">
+                                                                <span class="mt-comment-author"><?php echo $usuario[0].' (Zona '.$row['zona'].')'?></span>
+                                                                <span class="mt-comment-date"><?php echo calcula_tiempo(strtotime(date($row['fecha'].' '.$row['hora'])));?></span>
+                                                            </div>
+                                                            <?php echo date($row['fecha'].' '.$row['hora']) ?>
+                                                            <div class="mt-comment-text"> <?php echo $row['observacion']; ?> </div>
+                                                            <div class="mt-comment-details">
+                                                                <span class="mt-comment-status mt-comment-status-pending"><?php echo $vendedor[0]; ?></span>
+                                                                <ul class="mt-comment-actions">
+                                                                    <li>
+                                                                        <a href="visita_view.php?id_visita=<?php echo $row['id']?>">Visualizar</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
+                                                </div>
+                                                <?php 
+                                                } ?>
                                             </div>
-                                            <?php 
-                                            } ?>
+
+                                            <div class="tab-pane" id="tab_zona_a">
+                                                <?php
+                                                $resultado2 = $mysqli->query("SELECT v.id, v.usuario_id, v.id_vendedor, v.observacion, v.fecha, v.hora, z.des AS zona, u.avatar  FROM visitas v JOIN medicos m ON v.usuario_id = m.usuario_id JOIN zonas z ON m.zona = z.id JOIN usuarios u ON m.usuario_id = u.id WHERE v.estado = 0 AND prioridad = 'A' ORDER BY v.fecha DESC"); 
+                                                
+                                                while($row2 = mysqli_fetch_array($resultado2))
+                                                {
+                                                    $usuario2 = explode(";", consulta_usuarios($row2['usuario_id']));
+                                                    $vendedor2 = explode(";", consulta_usuarios($row2['id_vendedor']));
+                                                ?>
+                                                <div class="mt-comments">
+                                                    <div class="mt-comment">
+                                                        <div class="mt-comment-img">
+                                                            <img src="assets/avatars/img/<?php echo $usuario2[1];?>" /> </div>
+                                                        <div class="mt-comment-body">
+                                                            <div class="mt-comment-info">
+                                                                <span class="mt-comment-author"><?php echo $usuario2[0].' (Zona '.$row2['zona'].')'?></span>
+                                                                <span class="mt-comment-date"><?php echo calcula_tiempo(strtotime(date($row2['fecha'].' '.$row2['hora'])));?></span>
+                                                            </div>
+                                                            <?php echo date($row2['fecha'].' '.$row2['hora']) ?>
+                                                            <div class="mt-comment-text"> <?php echo $row2['observacion']; ?> </div>
+                                                            <div class="mt-comment-details">
+                                                                <span class="mt-comment-status mt-comment-status-pending"><?php echo $vendedor2[0]; ?></span>
+                                                                <ul class="mt-comment-actions">
+                                                                    <li>
+                                                                        <a href="visita_view.php?id_visita=<?php echo $row2['id']?>">Visualizar</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <?php 
+                                                } ?>
+                                            </div>
+
+                                            <div class="tab-pane" id="tab_zona_m">
+                                                <?php
+                                                $resultado3 = $mysqli->query("SELECT v.id, v.usuario_id, v.id_vendedor, v.observacion, v.fecha, v.hora, z.des AS zona, u.avatar  FROM visitas v JOIN medicos m ON v.usuario_id = m.usuario_id JOIN zonas z ON m.zona = z.id JOIN usuarios u ON m.usuario_id = u.id WHERE v.estado = 0 AND prioridad = 'M' ORDER BY v.fecha DESC"); 
+                                                
+                                                while($row3 = mysqli_fetch_array($resultado3))
+                                                {
+                                                    $usuario3 = explode(";", consulta_usuarios($row3['usuario_id']));
+                                                    $vendedor3 = explode(";", consulta_usuarios($row3['id_vendedor']));
+                                                ?>
+                                                <div class="mt-comments">
+                                                    <div class="mt-comment">
+                                                        <div class="mt-comment-img">
+                                                            <img src="assets/avatars/img/<?php echo $usuario3[1];?>" /> </div>
+                                                        <div class="mt-comment-body">
+                                                            <div class="mt-comment-info">
+                                                                <span class="mt-comment-author"><?php echo $usuario3[0].' (Zona '.$row3['zona'].')'?></span>
+                                                                <span class="mt-comment-date"><?php echo calcula_tiempo(strtotime(date($row3['fecha'].' '.$row3['hora'])));?></span>
+                                                            </div>
+                                                            <?php echo date($row3['fecha'].' '.$row3['hora']) ?>
+                                                            <div class="mt-comment-text"> <?php echo $row3['observacion']; ?> </div>
+                                                            <div class="mt-comment-details">
+                                                                <span class="mt-comment-status mt-comment-status-pending"><?php echo $vendedor3[0]; ?></span>
+                                                                <ul class="mt-comment-actions">
+                                                                    <li>
+                                                                        <a href="visita_view.php?id_visita=<?php echo $row3['id']?>">Visualizar</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <?php 
+                                                } ?>
+                                            </div>
+
+                                            <div class="tab-pane" id="tab_zona_b">
+                                                <?php
+                                                $resultado4 = $mysqli->query("SELECT v.id, v.usuario_id, v.id_vendedor, v.observacion, v.fecha, v.hora, z.des AS zona, u.avatar  FROM visitas v JOIN medicos m ON v.usuario_id = m.usuario_id JOIN zonas z ON m.zona = z.id JOIN usuarios u ON m.usuario_id = u.id WHERE v.estado = 0 AND prioridad = 'B' ORDER BY v.fecha DESC"); 
+                                                
+                                                while($row4 = mysqli_fetch_array($resultado4))
+                                                {
+                                                    $usuario4 = explode(";", consulta_usuarios($row4['usuario_id']));
+                                                    $vendedor4 = explode(";", consulta_usuarios($row4['id_vendedor']));
+                                                ?>
+                                                <div class="mt-comments">
+                                                    <div class="mt-comment">
+                                                        <div class="mt-comment-img">
+                                                            <img src="assets/avatars/img/<?php echo $usuario4[1];?>" /> </div>
+                                                        <div class="mt-comment-body">
+                                                            <div class="mt-comment-info">
+                                                                <span class="mt-comment-author"><?php echo $usuario4[0].' (Zona '.$row4['zona'].')'?></span>
+                                                                <span class="mt-comment-date"><?php echo calcula_tiempo(strtotime(date($row4['fecha'].' '.$row4['hora'])));?></span>
+                                                            </div>
+                                                            <?php echo date($row4['fecha'].' '.$row4['hora']) ?>
+                                                            <div class="mt-comment-text"> <?php echo $row4['observacion']; ?> </div>
+                                                            <div class="mt-comment-details">
+                                                                <span class="mt-comment-status mt-comment-status-pending"><?php echo $vendedor4[0]; ?></span>
+                                                                <ul class="mt-comment-actions">
+                                                                    <li>
+                                                                        <a href="visita_view.php?id_visita=<?php echo $row4['id']?>">Visualizar</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <?php 
+                                                } ?>
+                                            </div>
 
                                         </div>
                                     </div>

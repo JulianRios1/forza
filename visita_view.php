@@ -115,6 +115,25 @@ extract($_GET);
 
                                             /* DATOS DEL USUARIO */
                                             $usuario = explode(";", consulta_usuarios($row['usuario_id']));
+
+                                            //LA PRIORIDAD DE LA VISITA
+                                            $prioridad = null;
+                                            switch ($row['prioridad']) {
+                                                case 'MA':
+                                                    $prioridad = 'Muy Alta';
+                                                    break;
+                                                case 'A':
+                                                    $prioridad = 'Alta';
+                                                    break;
+                                                case 'M':
+                                                    $prioridad = 'Media';
+                                                    break;
+                                                case 'B':
+                                                    $prioridad = 'Baja';
+                                                    break;
+                                                default:
+                                                    $prioridad = 'No Registra';
+                                            }
                                             
                                             ?>
                                             <div class="portlet-body form">
@@ -207,6 +226,17 @@ extract($_GET);
                                                                             <div class="col-md-10">
                                                                                 <p class="form-control-static">
                                                                                     <b><?php echo $row5['descripcion'] ?></b>
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-2">Prioridad</label>
+                                                                            <div class="col-md-10">
+                                                                                <p class="form-control-static">
+                                                                                    <b><?php echo $prioridad ?></b>
                                                                                 </p>
                                                                             </div>
                                                                         </div>

@@ -214,6 +214,22 @@ extract($_GET);
                                                                             </div>
                                                                         </div>
                                                                     </div>
+
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-2">Prioridad</label>
+                                                                            <div class="col-md-10">
+                                                                                <select name="prioridad" id="prioridad" class="form-control">
+                                                                                    <option value="">-Seleccione-</option>
+                                                                                    <option value="MA" <?php echo ($row['prioridad'] == 'MA') ? 'selected' : ''; ?>>Muy Alta</option>
+                                                                                    <option value="A" <?php echo ($row['prioridad'] == 'A') ? 'selected' : ''; ?>>Alta</option>
+                                                                                    <option value="M" <?php echo ($row['prioridad'] == 'M') ? 'selected' : ''; ?>>Media</option>
+                                                                                    <option value="B" <?php echo ($row['prioridad'] == 'B') ? 'selected' : ''; ?>>Baja</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
                                                                     <div class="col-md-12">
                                                                         <div class="form-group">
                                                                             <label class="control-label col-md-2">Comentario</label>
