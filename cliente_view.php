@@ -644,6 +644,9 @@ extract ($_GET);
                                                                     <th>
                                                                         Valor
                                                                     </th>
+                                                                    <th> 
+
+                                                                    </th>
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -668,6 +671,9 @@ extract ($_GET);
                                                                         </td>
                                                                         <td>
                                                                             <?php echo '$'.number_format($row_pedidos["total"], 0, ",", ".")?>
+                                                                        </td>
+                                                                        <td>
+                                                                            <?php echo '<a href="pedido_view.php?id='.$row_pedidos['idpedido'].'" target="_blank" data-toggle="tooltip" data-placement="top" title="Ver" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i></a>';?>
                                                                         </td>
                                                                     </tr>
                                                                     <?php 
