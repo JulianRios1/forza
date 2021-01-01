@@ -126,32 +126,64 @@ $pagina = 'inicio';
                                     </div>
                                 </div>                                
                                 <div class="portlet-body">
-
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_linea_humana" data-toggle="tab">Línea Humana</a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_linea_veterinaria" data-toggle="tab">Línea Veterinaria</a>
+                                        </li>
+                                    </ul>
                                     <div class="scroller" style="height: 320px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
-                                        <?php 
-                                        //CONSULTAMOS LOS PRODUCTOS DEL MES
-                                        //echo 'saulo'.$array_productos[0]['nombre'];
-                                        $array_meta = '';
+                                        
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab_linea_humana">
+                                                <?php 
+                                                    //CONSULTAMOS LOS PRODUCTOS DEL MES
+                                                    //echo 'saulo'.$array_productos[0]['nombre'];
+                                                    $array_meta = '';
 
-                                        $resultado = $mysqli->query("SELECT p.idproducto, UPPER(p.desproducto) AS nombre, p.meta_producto FROM productos p WHERE p.destacado = 1 AND p.agotado = 0 AND p.oculto = 0 ORDER BY p.desproducto");
+                                                    $resultado = $mysqli->query("SELECT p.idproducto, UPPER(p.desproducto) AS nombre, p.meta_producto FROM productos p WHERE p.destacado = 1 AND p.agotado = 0 AND p.oculto = 0 AND p.linea = 1 ORDER BY p.desproducto");
 
-                                        $num_productos = mysqli_num_rows($resultado);
+                                                    $num_productos = mysqli_num_rows($resultado);
 
-                                            while($row= mysqli_fetch_array($resultado))
-                                            {     
-                                                
+                                                    while($row= mysqli_fetch_array($resultado))
+                                                    {     
+                                                        
 
-                                                //CONSULTAMOS LAS CANTIDADES DE LOS PRODUCTOS VENDIDAS POR ZONA
-                                                $resultado_ventas = $mysqli->query("SELECT COALESCE(SUM(pp.cantpedido_producto),0) AS cantidad FROM pedidos_productos pp JOIN pedidos p ON pp.pedido_idpedido = p.idpedido JOIN medicos m ON p.usuario_idusuario = m.usuario_id WHERE pp.producto_idproducto = ".$row['idproducto']." AND YEAR(p.fecpedido) = ".date('Y')." AND MONTH(p.fecpedido) = ".date('m'));
-                                                $row_ventas = mysqli_fetch_array($resultado_ventas);
+                                                        //CONSULTAMOS LAS CANTIDADES DE LOS PRODUCTOS VENDIDAS POR ZONA
+                                                        $resultado_ventas = $mysqli->query("SELECT COALESCE(SUM(pp.cantpedido_producto),0) AS cantidad FROM pedidos_productos pp JOIN pedidos p ON pp.pedido_idpedido = p.idpedido JOIN medicos m ON p.usuario_idusuario = m.usuario_id WHERE pp.producto_idproducto = ".$row['idproducto']." AND YEAR(p.fecpedido) = ".date('Y')." AND MONTH(p.fecpedido) = ".date('m'));
+                                                        $row_ventas = mysqli_fetch_array($resultado_ventas);
 
-                                                $array_meta.= '{"name": "'.$row["nombre"].'","points": '.$row_ventas['cantidad'].', "meta":'.$row['meta_producto'].',"color":"'.color_random().'"},';
-                                            }
-                                            ?>
-                                     
-                                            <div id="chartprod_meta" class="chart" style="height: 320px;"> </div>
+                                                        $array_meta.= '{"name": "'.$row["nombre"].'","points": '.$row_ventas['cantidad'].', "meta":'.$row['meta_producto'].',"color":"'.color_random().'"},';
+                                                    }
+                                                ?>
+                                                <div id="chartprod_meta" class="chart" style="height: 320px;"> </div>
+                                            </div>
+                                            <div class="tab-pane" id="tab_linea_veterinaria">
+                                                <?php 
+                                                    //CONSULTAMOS LOS PRODUCTOS DEL MES
+                                                    //echo 'saulo'.$array_productos[0]['nombre'];
+                                                    $array_meta_v = '';
 
-                                              
+                                                    $resultado = $mysqli->query("SELECT p.idproducto, UPPER(p.desproducto) AS nombre, p.meta_producto FROM productos p WHERE p.destacado = 1 AND p.agotado = 0 AND p.oculto = 0 AND p.linea = 2 ORDER BY p.desproducto");
+
+                                                    $num_productos = mysqli_num_rows($resultado);
+
+                                                    while($row= mysqli_fetch_array($resultado))
+                                                    {     
+                                                        
+
+                                                        //CONSULTAMOS LAS CANTIDADES DE LOS PRODUCTOS VENDIDAS POR ZONA
+                                                        $resultado_ventas = $mysqli->query("SELECT COALESCE(SUM(pp.cantpedido_producto),0) AS cantidad FROM pedidos_productos pp JOIN pedidos p ON pp.pedido_idpedido = p.idpedido JOIN medicos m ON p.usuario_idusuario = m.usuario_id WHERE pp.producto_idproducto = ".$row['idproducto']." AND YEAR(p.fecpedido) = ".date('Y')." AND MONTH(p.fecpedido) = ".date('m'));
+                                                        $row_ventas = mysqli_fetch_array($resultado_ventas);
+
+                                                        $array_meta_v.= '{"name": "'.$row["nombre"].'","points": '.$row_ventas['cantidad'].', "meta":'.$row['meta_producto'].',"color":"'.color_random().'"},';
+                                                    }
+                                                ?>
+                                                <div id="chartprod_meta_v" class="chart" style="height: 320px;"> </div>
+                                            </div>
+                                        </div>  
                                     </div>
                                 </div>
                             </div>
@@ -1254,6 +1286,62 @@ JOIN zonas z ON m.zona = z.id JOIN usuarios u ON v.usuario_id = u.id WHERE v.com
             "type": "serial",
             "theme": "light",
             "dataProvider": [<?php echo $array_meta;?>],
+            "valueAxes": [{
+                //"maximum": 800,
+                "minimum": 0,
+                "axisAlpha": 0,
+                "dashLength": 4,
+                "position": "left"
+            }],
+            "startDuration": 1,
+            "graphs": [{
+                "balloonText": "<span style='font-size:13px;'>[[category]]: <b>[[value]]</b></span>",
+                "bulletOffset": 10,
+                "bulletSize": 52,
+                "colorField": "color",
+                "cornerRadiusTop": 5,
+                "fillAlphas": 0.8,
+                "lineAlpha": 0,
+                "type": "column",
+                "valueField": "points"
+            }, {
+                "balloonText": "<span style='font-size:13px;'>[[title]]:<b>[[value]]</b> [[additional]]</span>",
+                "bullet": "round",
+                "dashLengthField": "dashLengthLine",
+                "lineThickness": 3,
+                "bulletSize": 7,
+                "bulletBorderAlpha": 1,
+                "bulletColor": "#FFFFFF",
+                "useLineColorForBulletBorder": true,
+                "bulletBorderThickness": 3,
+                "fillAlphas": 0,
+                "lineAlpha": 1,
+                "title": "Meta",
+                "valueField": "meta"
+            }],
+            "marginTop": 0,
+            "marginRight": 0,
+            "marginLeft": 0,
+            "marginBottom": 0,
+            "autoMargins": true,
+            "categoryField": "name",
+            "categoryAxis": {
+                "axisAlpha": 0,
+                "gridAlpha": 0,
+                "inside": true,
+                "tickLength": 0,
+                "labelRotation": 90
+            },
+            "export": {
+                "enabled": true
+             }
+        });
+
+        var chart = AmCharts.makeChart("chartprod_meta_v",
+        {
+            "type": "serial",
+            "theme": "light",
+            "dataProvider": [<?php echo $array_meta_v;?>],
             "valueAxes": [{
                 //"maximum": 800,
                 "minimum": 0,
