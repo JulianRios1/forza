@@ -86,7 +86,7 @@ if(isset($tipo_documento))
 
       //ENVIAMOS UN EMAIL SI ESTA MARCADO COMO CLIENTE NUEVO
       
-      if($enviar_email == 1)
+      if(isset($enviar_email) && $enviar_email == 1)
       {
         //CONSULTAMOS EL MENSAJE DE ESTE EMAIL
         $consulta = $mysqli->query("SELECT *  FROM texto_correos t WHERE t.id = 3");

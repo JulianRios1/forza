@@ -42,7 +42,7 @@ if(isset($observacion))
   if($mysqli->query($insertar))
   { 
 
-    if($contacto == 2)
+    if($contacto == 2 || $contacto == 3)//si es consultorio cliente u oficina bihomedis, que si cambie la ultima fecha visita y la tenga en cuenta en el contador de clientes visitados del dashboard
     {
       //ACTUALIZAMOS LA ULTIMA VISITA
       $actualizar = "UPDATE medicos SET fecha_ult_vis = CURDATE()  WHERE usuario_id = $hdd_id";
