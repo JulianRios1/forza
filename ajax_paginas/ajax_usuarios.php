@@ -24,7 +24,7 @@ if($_SESSION['rol_usu'] ==  1)
 /*=====   Fin del comentario   ======*/
 
 
-$resultado = $mysqli->query("SELECT u.id, u.documento, u.nom, u.ape1, u.ape2, u.mail, u.estado, u.usu, u.cel, u.puntos, r.nomrol FROM usuarios u JOIN roles r ON u.idrol = r.id WHERE u.id != 1 ");
+$resultado = $mysqli->query("SELECT u.id, u.documento, u.nom, u.ape1, u.ape2, u.mail, u.estado, u.usu, u.cel, u.puntos, r.nomrol FROM usuarios u JOIN roles r ON u.idrol = r.id WHERE u.eliminado = 0 AND u.id != 1 ");
 
 $tabla = "";
 

@@ -23,7 +23,7 @@ if($_SESSION['rol_usu'] ==  1)
 
 /*=====   Fin del comentario   ======*/
 
-$resultado = $mysqli->query("SELECT u.id, u.documento, u.nom, u.ape1, u.ape2, u.mail, u.dir, u.tel, u.cel, z.des AS zona, m.barrio1, m.fecha_ult_vis, m.listaPrecios, m.fec_ult_pedido, m.valor_compras, m.mes_compras, m.ano_compras FROM usuarios u JOIN medicos m ON m.usuario_id = u.id JOIN zonas z ON m.zona = z.id WHERE u.idrol = 5 AND u.estado = 1 AND m.habilitado = 1 $cons_zonas");
+$resultado = $mysqli->query("SELECT u.id, u.documento, u.nom, u.ape1, u.ape2, u.mail, u.dir, u.tel, u.cel, z.des AS zona, m.barrio1, m.fecha_ult_vis, m.listaPrecios, m.fec_ult_pedido, m.valor_compras, m.mes_compras, m.ano_compras FROM usuarios u JOIN medicos m ON m.usuario_id = u.id JOIN zonas z ON m.zona = z.id WHERE u.eliminado = 0 AND u.idrol = 5 AND u.estado = 1 AND m.habilitado = 1 $cons_zonas");
 
 $tabla = "";
 

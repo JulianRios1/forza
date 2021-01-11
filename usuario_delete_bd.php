@@ -11,7 +11,7 @@ $respuesta = new stdClass();
 
 if (isset($id)){
 	
-	$eliminar = "DELETE FROM usuarios WHERE id = ".$id;
+	$eliminar = "UPDATE usuarios SET eliminado = 1 WHERE id = ".$id;
 	if($mysqli->query($eliminar))
 	{
 		$error_ins = false;

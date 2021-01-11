@@ -78,7 +78,7 @@ $pagina = 'nueva_orden';
                                                                     <select id="cliente" name="cliente" class="form-control input-sm select2">
                                                                         <option value="">-Seleccione-</option>
                                                                         <?php 
-                                                                        $resultado= $mysqli->query("SELECT u.id, UPPER(CONCAT_WS(' ',u.nom, u.ape1, u.ape2)) AS nombre FROM medicos m JOIN usuarios u ON m.usuario_id = u.id WHERE m.habilitado = 1 AND u.estado = 1 ORDER BY nombre");
+                                                                        $resultado= $mysqli->query("SELECT u.id, UPPER(CONCAT_WS(' ',u.nom, u.ape1, u.ape2)) AS nombre FROM medicos m JOIN usuarios u ON m.usuario_id = u.id WHERE u.eliminado = 0 AND m.habilitado = 1 AND u.estado = 1 ORDER BY nombre");
                                                                         while($row = mysqli_fetch_array($resultado))
                                                                         {
                                                                         ?>
