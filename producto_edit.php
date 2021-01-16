@@ -6,6 +6,10 @@
 include('head.php');
 include('includes/parametros.php');
 $pagina = 'productos';
+
+//llamamos las variables globales
+require_once('global_var.php');
+
 extract($_GET);
 
 //CONSULTAMOS EL PRODUCTO A EDITAR
@@ -118,7 +122,7 @@ $row = mysqli_fetch_array($resultado);
                                                                     if(!empty($row['rutproducto']))
                                                                     {
                                                                         ?>
-                                                                        <img src="../imagenes_productos/<?php echo $row['rutproducto'];?>" alt=""/>
+                                                                        <img src="<?php echo $GLOBALS['product_images_route'].$row['rutproducto'];?>" alt=""/>
                                                                         <?php
                                                                     }
                                                                     else
