@@ -2,6 +2,9 @@
 @session_start();
 include('conexion.php');
 
+//llamamos las variables globales
+require_once('global_var.php');
+
 extract($_POST);
 
 if(isset($nombre))
@@ -17,7 +20,7 @@ if(isset($nombre))
 
 		$extensiones_aceptadas = array("jpg","gif","png");
 		//ADJUNTAMOS LA IMAGEN
-		$carpetaAdjunta="../imagenes_productos/";
+		$carpetaAdjunta=$GLOBALS['product_images_route'];
 
 		// El nombre y nombre temporal del archivo que vamos para adjuntar
 		$fotoArchivo=$_FILES['foto']['name'];
