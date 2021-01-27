@@ -262,7 +262,18 @@
         <?php 
         }
         ?>
-
+        <li class="nav-item  <?php if($pagina == 'info_elementos_visitas'){ echo 'active open';}?> ">
+            <a href="informe_elementos_visitas.php" class="nav-link nav-toggle">
+                <i class="icon-notebook"></i>
+                <span class="title">Elementos de Visitas</span>
+            </a>
+        </li>
+        <li class="nav-item  <?php if($pagina == 'info_efectividad_todos'){ echo 'active open';}?> ">
+            <a href="informe_efectividad_todos.php" class="nav-link nav-toggle">
+                <i class="icon-notebook"></i>
+                <span class="title">Efectividad Visitas Todos</span>
+            </a>
+        </li>
 
 
         <li class="heading">

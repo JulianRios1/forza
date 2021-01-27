@@ -66,6 +66,7 @@ if(empty($_SESSION["idusuario"]))
     <!--<link href="assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />-->
     <link href="assets/layouts/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css" id="style_color" />
     <link href="assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/global/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
     
 
     <link rel="shortcut icon" href="favicon.ico" /> 
