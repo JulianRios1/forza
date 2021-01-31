@@ -54,13 +54,13 @@ $pagina = 'info_elementos_visitas';
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label class="control-label">Fecha Inicial</label>
-                                                                        <input type="text" id="fecha_inicial" class="form-control" placeholder="Escoja la fecha inicial">
+                                                                        <input type="text" id="fecha_inicial" class="form-control" placeholder="Escoja la fecha inicial" required>
                                                                     </div>
                                                                 </div>   
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label class="control-label">Fecha Final</label>
-                                                                        <input type="text" id="fecha_final" class="form-control" placeholder="Escoja la fecha final">
+                                                                        <input type="text" id="fecha_final" class="form-control" placeholder="Escoja la fecha final" required>
                                                                     </div>
                                                                 </div>
                                                             </div> 
@@ -69,7 +69,7 @@ $pagina = 'info_elementos_visitas';
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label class="control-label">Concepto</label>
-                                                                        <select name="concepto" id="concepto" class="form-control">
+                                                                        <select name="concepto" id="concepto" class="form-control" required>
                                                                             <option value="">-Seleccione-</option>
                                                                             <option value="1">Literatura</option>
                                                                             <option value="2">Obsequio</option>
@@ -142,6 +142,29 @@ $pagina = 'info_elementos_visitas';
 
                         </div>
                     </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <table id="elementos_visitas" class="table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Empleado</th>
+                                            <th>Tipo Contacto</th>
+                                            <th>Fecha y Hora</th>
+                                            <th>Médico</th>
+                                            <th>Ver</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

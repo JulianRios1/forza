@@ -54,19 +54,19 @@ $pagina = 'info_efectividad_todos';
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
                                                                         <label class="control-label">Meta Por Empleado: </label>
-                                                                        <input type="number" id="meta_empleado" class="form-control" value="168" placeholder="Escriba la meta por empleado">
+                                                                        <input type="number" id="meta_empleado" class="form-control" value="168" placeholder="Escriba la meta por empleado" required>
                                                                     </div>
                                                                 </div>   
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
                                                                         <label class="control-label">Meta Total: </label>
-                                                                        <input type="number" id="meta_total" class="form-control" value="600" placeholder="Escriba la meta total">
+                                                                        <input type="number" id="meta_total" class="form-control" value="600" placeholder="Escriba la meta total" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
                                                                         <label class="control-label">Mes a Consultar</label>
-                                                                        <input type="text" id="mes_consulta" class="form-control" placeholder="Escoja el mes a consultar">
+                                                                        <input type="text" id="mes_consulta" class="form-control" placeholder="Escoja el mes a consultar" required>
                                                                     </div>
                                                                 </div>
                                                             </div> 
