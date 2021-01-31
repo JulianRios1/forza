@@ -50,6 +50,12 @@ $( document ).ready(function() {
                 {"data": "telefono"},
                 {"data": "meta"},
                 {"data": "efectividad"},
+            ],
+            dom: 'Bfrtip',
+            buttons: [
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
             ]
         });
 
