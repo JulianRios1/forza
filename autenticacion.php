@@ -5,6 +5,7 @@ $usuario = $mysqli->real_escape_string($_POST["usuario"]);
 
 
 //vemos si el usuario y contrasena es valido 
+//$resultado = $mysqli->query("SELECT u.id, u.nom, u.ape1, u.ape2, u.idrol, u.mail, u.avatar, u.cambiar_fecha_visita, u.ciudad_nomina  FROM usuarios u WHERE u.usu ='".$usuario."' AND u.estado = 1 AND idrol != 5");
 $resultado = $mysqli->query("SELECT u.id, u.nom, u.ape1, u.ape2, u.idrol, u.mail, u.avatar, u.cambiar_fecha_visita, u.ciudad_nomina  FROM usuarios u WHERE u.usu ='".$usuario."' AND u.pass ='".$clave."' AND u.estado = 1 AND idrol != 5");
 
 $num_registros = mysqli_num_rows($resultado);
