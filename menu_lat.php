@@ -274,6 +274,18 @@
                 <span class="title">Efectividad Visitas Todos</span>
             </a>
         </li>
+        <li class="nav-item  <?php if($pagina == 'info_meta_vendedor_ingreso'){ echo 'active open';}?> ">
+            <a href="informe_meta_vendedor_ingreso.php" class="nav-link nav-toggle">
+                <i class="icon-notebook"></i>
+                <span class="title">Registrar mi Meta</span>
+            </a>
+        </li>
+        <li class="nav-item  <?php if($pagina == 'info_meta_vendedor'){ echo 'active open';}?> ">
+            <a href="informe_meta_vendedor.php" class="nav-link nav-toggle">
+                <i class="icon-notebook"></i>
+                <span class="title">Monitorear Meta</span>
+            </a>
+        </li>
 
 
         <li class="heading">

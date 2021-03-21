@@ -68,15 +68,14 @@ while($row = mysqli_fetch_array($resultado)){
     //calculo de efectividad
     $totalVisitasValidas = intval($consultorio) + intval($oficina);
     $efectividad = round(($totalVisitasValidas*100)/intval($metaDefinida));
-    $efectividad = $efectividad."%";
     if($efectividad < 34){
-        $efectividadHtml = "<b style='color:red;'>".$efectividad."</b>";
+        $efectividadHtml = "<b style='color:red;'>".$efectividad."%</b>";
     }else{
         if($efectividad > 33 && $efectividad < 67){
-            $efectividadHtml = "<b style='color:yellow;'>".$efectividad."</b>";
+            $efectividadHtml = "<b style='color:orange;'>".$efectividad."%</b>";
         }else{
             if($efectividad > 66){
-                $efectividadHtml = "<b style='color:green;'>".$efectividad."</b>";
+                $efectividadHtml = "<b style='color:green;'>".$efectividad."%</b>";
             }
         }
     }
