@@ -72,27 +72,30 @@ $pagina = 'nueva_orden';
                                                         <div class="alert alert-success display-hide">
                                                             <button class="close" data-close="alert"></button> Listo! </div>
                                                         <div class="row">
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-8">
                                                                 <div class="form-group">
-                                                                    <label for="span_small" class="control-label">Cliente</label>
-                                                                    <select id="cliente" name="cliente" class="form-control input-sm select2">
-                                                                        <option value="">-Seleccione-</option>
-                                                                        <?php 
-                                                                        $resultado= $mysqli->query("SELECT u.id, UPPER(CONCAT_WS(' ',u.nom, u.ape1, u.ape2)) AS nombre FROM medicos m JOIN usuarios u ON m.usuario_id = u.id WHERE u.eliminado = 0 AND m.habilitado = 1 AND u.estado = 1 ORDER BY nombre");
-                                                                        while($row = mysqli_fetch_array($resultado))
-                                                                        {
-                                                                        ?>
-                                                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['nombre'] ?></option>
-                                                                        <?php 
-                                                                        } ?>                                                                  
-                                                                    </select>
+                                                                    <label for="cliente-texto" class="control-label">Cliente</label>
+                                                                    <input type="text" name="cliente-texto" id="cliente-texto" class="form-control form-control-lg rounded-0 border-info" placeholder="Buscar cliente..." />
+                                                                    <input id="cliente" name="cliente" type="hidden" value="">
                                                                 </div>
+                                                                <!--<button type="submit" class="btn green">Consultar</button>-->
+                                                            </div>                                                 
+                                                        </div> 
+                                                        <div class="row">
+                                                            <div class="col-md-6" style="margin-top:-14px;">
+                                                                <div class="list-group" id="clientes-list">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2">
+
+                                                            </div> 
+                                                            <div class="col-md-4">
                                                                 <button type="submit" class="btn btn-info">
                                                                     <span class="glyphicon glyphicon-plus"></span> Agregar productos
                                                                 </button>
-                                                                <!--<button type="submit" class="btn green">Consultar</button>-->
-                                                            </div>                                                            
-                                                        </div> 
+                                                            </div> 
+                                                        </div>
 
 
                                                         <div class="row margin-top-20">                                                            
@@ -227,13 +230,51 @@ $pagina = 'nueva_orden';
                 =              Sacamos el cliente             =
                 =============================================*/
                 
-                var placeholder = "Seleccione el Cliente";
+                //var placeholder = "Seleccione el Cliente";
 
-                $(".select2, .select2-multiple").select2({
-                    placeholder: placeholder,
-                    width: null
+                // $(".select2, .select2-multiple").select2({
+                //     placeholder: placeholder,
+                //     width: null
+                // });
+
+                $("#cliente-texto").keyup(function(){
+                    var searchText = $(this).val();
+                    if(searchText.length > 2){
+                        $.ajax({
+                            url: 'ajax_paginas/ajax_autocomplete_cliente.php',
+                            method: 'post',
+                            data: {query: searchText},
+                            success: function(response){
+                                $("#clientes-list").html(response);
+                                $(".cliente-item").on('click', function(){
+                                    var texto = $(this).text();
+                                    var arrayText = texto.split(" - ");
+                                    var valorId = arrayText[0];
+                                    var valorTexto = arrayText[1];
+
+                                    $("#cliente-texto").val(valorTexto);
+                                    $("#cliente").val(valorId);
+                                    $("#clientes-list").html('');
+
+                                    //codigo que estaba en un evento change del antiguo select2...
+                                    var elegido=valorId;
+                                    //alert(elegido);
+                                    if( elegido != '')
+                                    {
+                                        $.post("ayuda_pedido.php", { elegido: elegido }, function(data){
+                                            $("#consulta").html(data);
+                                            
+                                        });            
+                                    }
+                                    /////////////////////////////////////////////////////////////
+                                });
+                            }
+                        });
+                    }else{
+                        $("#clientes-list").html('');
+                        $("#cliente").val('');
+                    }
                 });
-                
                 /*================  FIN  ===================*/
             
             });
@@ -391,24 +432,24 @@ $pagina = 'nueva_orden';
                     load(1,id_cliente);
                     $("#hdd_cliente").val(id_cliente);
                     $('#myModal').modal('show'); 
-                    $("#cliente").prop('disabled', 'disabled');
+                    $("#cliente-texto").prop('disabled', 'disabled');
 
                     return false;
                 }
 
             });
 
-            $("#cliente").change(function(){
-                var elegido=$(this).val();
-                //alert(elegido);
-                if( elegido != '')
-                {
-                    $.post("ayuda_pedido.php", { elegido: elegido }, function(data){
-                        $("#consulta").html(data);
+            // $("#cliente").change(function(){
+            //     var elegido=$(this).val();
+            //     //alert(elegido);
+            //     if( elegido != '')
+            //     {
+            //         $.post("ayuda_pedido.php", { elegido: elegido }, function(data){
+            //             $("#consulta").html(data);
                         
-                    });            
-                }
-            });
+            //         });            
+            //     }
+            // });
 
 
         </script>
