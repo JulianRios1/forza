@@ -370,13 +370,27 @@ else {
         $correo_vendedor = ",".$_SESSION["email_usu"];
     }
 
+    //VALIDAMOS SI LOS CORREOS EXTRA DE GLOBAL_VAR.PHP TIENEN DATA
+    $email_extra1 = "";
+    $email_extra2 = "";
+    $email_extra3 = "";
+    if($GLOBALS['mail_to1'] != ''){
+        $email_extra1 = ",".$GLOBALS['mail_to1'];
+    }
+    if($GLOBALS['mail_to2'] != ''){
+        $email_extra2 = ",".$GLOBALS['mail_to2'];
+    }
+    if($GLOBALS['mail_to3'] != ''){
+        $email_extra3 = ",".$GLOBALS['mail_to3'];
+    }
+
 	$headers = "MIME-Version: 1.0" . "\r\n";
 	$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
 	// Additional headers
 	$headers .= 'From: '.$GLOBALS['company'].' <'.$GLOBALS['mail_from'].'>' . "\r\n";
 	//$headers .= 'Cc: desarollo@imatiml.com'. "\r\n";
-    $headers .= "Bcc: ".$GLOBALS['mail_to'].$correo_vendedor.$destino_adicional . "\r\n"; 
+    $headers .= "Bcc: ".$GLOBALS['mail_to'].$email_extra1.$email_extra2.$email_extra3.$correo_vendedor.$destino_adicional . "\r\n"; 
 
 	// Send email
 	if(mail($to,$subject,$htmlContent,$headers)){
