@@ -103,7 +103,9 @@ else {
 
 
     $i=1;
-    $subtotal = $total = $tabla = '';
+    $tabla = '';
+    $subtotal = 0;
+    $total = 0;
     $resultado = $mysqli->query("SELECT pp.idpedido_producto, p.desproducto, c.descategoria, pp.cantpedido_producto, pp.valproducto FROM pedidos_productos pp JOIN productos p ON pp.producto_idproducto = p.idproducto JOIN categorias c ON p.categoria_idcategoria = c.idcategoria WHERE pp.pedido_idpedido = ".$id_pedido_nuevo);
     
     while($row_p = mysqli_fetch_array($resultado))
@@ -351,21 +353,30 @@ else {
 </html>
 	';
 
-    $correo_cucuta="";
-    if($_SESSION["sede"] == 831 )
-    {
-        $correo_cucuta = ",sucursalcucuta@bihomedis.com";
+    //VALIDAMOS SI VIENE UN DESTINO PEDIDO, PARA PONERLO EN EL CORREO
+    $destino_adicional = "";
+    $correo_vendedor = "";
+    if($destino_pedido == 0){//si el parámetro de destino de pedido está desactivado
+        if($_SESSION["sede"] == 831 )
+        {
+            $destino_adicional = ",sucursalcucuta@bihomedis.com";
+        }
+    }else{
+        $destino_adicional = ",".$destino_pedido;
+    }
+
+    //VALIDAMOS SI TIENE EL PARÁMETRO DE ENVIAR EL CORREO AL VENDEDOR
+    if(isset($_SESSION['LLEGA_CORREO_VENDEDOR'])){
+        $correo_vendedor = ",".$_SESSION["email_usu"];
     }
 
 	$headers = "MIME-Version: 1.0" . "\r\n";
 	$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
-
 	// Additional headers
 	$headers .= 'From: '.$GLOBALS['company'].' <'.$GLOBALS['mail_from'].'>' . "\r\n";
 	//$headers .= 'Cc: desarollo@imatiml.com'. "\r\n";
-    $headers .= "Bcc: ".$GLOBALS['mail_to1'].",".$GLOBALS['mail_to2'].",".$GLOBALS['mail_to3']."$correo_cucuta\r\n"; 
-
+    $headers .= "Bcc: ".$GLOBALS['mail_to'].$correo_vendedor."$destino_adicional\r\n"; 
 
 	// Send email
 	if(mail($to,$subject,$htmlContent,$headers)){
