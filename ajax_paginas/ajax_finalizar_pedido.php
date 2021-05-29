@@ -356,13 +356,13 @@ else {
     //VALIDAMOS SI VIENE UN DESTINO PEDIDO, PARA PONERLO EN EL CORREO
     $destino_adicional = "";
     $correo_vendedor = "";
-    if($destino_pedido == 0){//si el parámetro de destino de pedido está desactivado
-        if($_SESSION["sede"] == 831 )
+    if(strlen($destino_pedido) > 0){//si el parámetro de destino de pedido está desactivado
+        $destino_adicional = ",".$destino_pedido;
+    }else{
+        if($_SESSION["sede"] == 831)
         {
             $destino_adicional = ",sucursalcucuta@bihomedis.com";
         }
-    }else{
-        $destino_adicional = ",".$destino_pedido;
     }
 
     //VALIDAMOS SI TIENE EL PARÁMETRO DE ENVIAR EL CORREO AL VENDEDOR
@@ -376,7 +376,7 @@ else {
 	// Additional headers
 	$headers .= 'From: '.$GLOBALS['company'].' <'.$GLOBALS['mail_from'].'>' . "\r\n";
 	//$headers .= 'Cc: desarollo@imatiml.com'. "\r\n";
-    $headers .= "Bcc: ".$GLOBALS['mail_to'].$correo_vendedor."$destino_adicional\r\n"; 
+    $headers .= "Bcc: ".$GLOBALS['mail_to'].$correo_vendedor.$destino_adicional . "\r\n"; 
 
 	// Send email
 	if(mail($to,$subject,$htmlContent,$headers)){

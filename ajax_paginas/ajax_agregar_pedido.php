@@ -151,7 +151,7 @@ $('#accion').click(function(){
 	var parametros_pedido = null;
 
 	if($('#destinos_pedido').val() == undefined){//si no está cargado el select de destinos del pedido porque tiene el parametro apagado...
-		parametros_pedido = {"id":id_cliente,"obs":obs,"total":total,"destino_pedido":0};
+		parametros_pedido = {"id":id_cliente,"obs":obs,"total":total,"destino_pedido":""};
 	}else{
 		if($('#destinos_pedido').val() == ""){
 			alert("El campo de destino del pedido es obligarotio.");
