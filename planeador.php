@@ -109,11 +109,17 @@ $resultado_agenda = $mysqli->query("SELECT a.id, UPPER(CONCAT_WS(' ',u.nom,u.ape
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="color" class="col-sm-2 control-label">Cliente</label>
+                                                <label for="cliente-texto" class="col-sm-2 control-label">Cliente</label>
                                                 <div class="col-sm-10">
-                                                    <select name="cliente" class="form-control" id="cliente">
-                                                      <option value="">-Seleccione-</option>                                                    
-                                                    </select>
+                                                    <input type="text" name="cliente-texto" id="cliente-texto" class="form-control form-control-lg rounded-0 border-info" placeholder="Buscar cliente..." />
+                                                    <input id="cliente" name="cliente" type="hidden" value="">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-10">
+                                                    <div class="list-group" id="clientes-list" style="margin-top:-14px;margin-left:22%;">
+                                                                    
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -478,14 +484,41 @@ $resultado_agenda = $mysqli->query("SELECT a.id, UPPER(CONCAT_WS(' ',u.nom,u.ape
 
 
             //Para consulta 
-           $("#zona").change(function () {
-                   $("#zona option:selected").each(function () {
-                    elegido=$(this).val();
-                    $.post("ajax_paginas/ajax_medicosZona.php", { elegido: elegido }, function(data){
-                    $("#cliente").html(data);
-                    });            
-                });
-           })
+        //    $("#zona").change(function () {
+        //            $("#zona option:selected").each(function () {
+        //             elegido=$(this).val();
+        //             $.post("ajax_paginas/ajax_medicosZona.php", { elegido: elegido }, function(data){
+        //             $("#cliente").html(data);
+        //             });            
+        //         });
+        //    })
+
+            $("#cliente-texto").keyup(function(){
+                var searchText = $(this).val();
+                if(searchText.length > 2){
+                    $.ajax({
+                        url: 'ajax_paginas/ajax_autocomplete_cliente.php',
+                        method: 'post',
+                        data: {query: searchText},
+                        success: function(response){
+                            $("#clientes-list").html(response);
+                            $(".cliente-item").on('click', function(){
+                                var texto = $(this).text();
+                                var arrayText = texto.split(" - ");
+                                var valorId = arrayText[0];
+                                var valorTexto = arrayText[1];
+
+                                $("#cliente-texto").val(valorTexto);
+                                $("#cliente").val(valorId);
+                                $("#clientes-list").html('');
+                            });
+                        }
+                    });
+                }else{
+                    $("#clientes-list").html('');
+                    $("#cliente").val('');
+                }
+            });
             
         });
 

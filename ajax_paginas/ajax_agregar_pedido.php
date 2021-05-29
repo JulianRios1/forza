@@ -37,6 +37,18 @@ if (isset($_GET['id']))//codigo elimina un elemento del array
 	$mysqli->query($eliminar);
 }
 
+//CONSULTAMOS SI EL PARAMETRO DE ESCOGER DESTINO DEL PEDIDO ESTÁ HABILITADO, Y SI ES ASÍ CARGAR EL SELECT CON TODA LA INFO
+$destinos = array();
+
+if(isset($_SESSION['SELECT_DESTINOS_PEDIDO'])){
+	$valor_param = $_SESSION['SELECT_DESTINOS_PEDIDO'];
+	$arr1 = explode(';',$valor_param);
+
+	foreach($arr1 as $option){
+		$arr2 = explode(',',$option);
+		$destinos[$arr2[0]] = $arr2[1];
+	}
+}
 ?>
 <table class="table table-striped table-bordered table-hover">
 <thead>
@@ -95,11 +107,30 @@ where t.session_id= '".$session_id."'");
 		?>
 		<div class="portlet-body form">
 	            <div class="form-body">
+					<?php 
+						if(count($destinos) > 0){
+					?>
+							<div class="form-group">
+								<label>Destino del Pedido</label>
+								<select class="form-control" id="destinos_pedido">
+									<option value="">Selecciona una opción</option>
+								<?php 
+									foreach ($destinos as $clave => $valor){
+								?>
+									<option value="<?php echo $clave; ?>"><?php echo $valor; ?></option>
+								<?php 
+									}
+								?>
+								</select>
+							</div>       
+					<?php 
+						}
+					?>  
 		        	<div class="form-group">
 	                    <label>Observaciones</label>
 	                    <textarea class="form-control" rows="3" id="observaciones" name="observaciones"></textarea>
 	                    <input type="hidden" name="hdd_total" id="hdd_total" value="<?php echo $sumador_total ?>">
-	                </div>               
+	                </div> 
 	            </div>
 	            <div class="form-actions" align="right">
 	            	<button type="button" class="btn btn-md" name="accion" id="accion"> <i class="fa fa-check"></i> Enviar Orden</button>
@@ -117,7 +148,19 @@ $('#accion').click(function(){
 	var id_cliente = $("#hdd_cliente").val();
 	var total = $("#hdd_total").val();
 
-	var parametros_pedido={"id":id_cliente,"obs":obs,"total":total};  
+	var parametros_pedido = null;
+
+	if($('#destinos_pedido').val() == undefined){//si no está cargado el select de destinos del pedido porque tiene el parametro apagado...
+		parametros_pedido = {"id":id_cliente,"obs":obs,"total":total,"destino_pedido":0};
+	}else{
+		if($('#destinos_pedido').val() == ""){
+			alert("El campo de destino del pedido es obligarotio.");
+			$('#destinos_pedido').focus();
+			return false;
+		}else{
+			parametros_pedido = {"id":id_cliente,"obs":obs,"total":total,"destino_pedido":$('#destinos_pedido').val()};
+		}
+	}
 
     $.ajax({
         type: "POST",
@@ -136,8 +179,7 @@ $('#accion').click(function(){
             }
             else
             {
-
-            	$("#resultados").html('El correo no pudo ser enviardo');
+            	$("#resultados").html('El correo no pudo ser enviado.');
             	setTimeout("location.href='pedido_add.php'", 5000);
             }
         }
