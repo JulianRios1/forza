@@ -356,18 +356,32 @@ else {
     //VALIDAMOS SI VIENE UN DESTINO PEDIDO, PARA PONERLO EN EL CORREO
     $destino_adicional = "";
     $correo_vendedor = "";
-    if($destino_pedido == 0){//si el parámetro de destino de pedido está desactivado
-        if($_SESSION["sede"] == 831 )
+    if(strlen($destino_pedido) > 0){//si el parámetro de destino de pedido está desactivado
+        $destino_adicional = ",".$destino_pedido;
+    }else{
+        if($_SESSION["sede"] == 831)
         {
             $destino_adicional = ",sucursalcucuta@bihomedis.com";
         }
-    }else{
-        $destino_adicional = ",".$destino_pedido;
     }
 
     //VALIDAMOS SI TIENE EL PARÁMETRO DE ENVIAR EL CORREO AL VENDEDOR
     if(isset($_SESSION['LLEGA_CORREO_VENDEDOR'])){
         $correo_vendedor = ",".$_SESSION["email_usu"];
+    }
+
+    //VALIDAMOS SI LOS CORREOS EXTRA DE GLOBAL_VAR.PHP TIENEN DATA
+    $email_extra1 = "";
+    $email_extra2 = "";
+    $email_extra3 = "";
+    if($GLOBALS['mail_to1'] != ''){
+        $email_extra1 = ",".$GLOBALS['mail_to1'];
+    }
+    if($GLOBALS['mail_to2'] != ''){
+        $email_extra2 = ",".$GLOBALS['mail_to2'];
+    }
+    if($GLOBALS['mail_to3'] != ''){
+        $email_extra3 = ",".$GLOBALS['mail_to3'];
     }
 
 	$headers = "MIME-Version: 1.0" . "\r\n";
@@ -376,7 +390,7 @@ else {
 	// Additional headers
 	$headers .= 'From: '.$GLOBALS['company'].' <'.$GLOBALS['mail_from'].'>' . "\r\n";
 	//$headers .= 'Cc: desarollo@imatiml.com'. "\r\n";
-    $headers .= "Bcc: ".$GLOBALS['mail_to'].$correo_vendedor."$destino_adicional\r\n"; 
+    $headers .= "Bcc: ".$GLOBALS['mail_to'].$email_extra1.$email_extra2.$email_extra3.$correo_vendedor.$destino_adicional . "\r\n"; 
 
 	// Send email
 	if(mail($to,$subject,$htmlContent,$headers)){
