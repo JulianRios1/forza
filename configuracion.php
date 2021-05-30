@@ -339,6 +339,93 @@ $pagina = 'configuracion';
                                         </div>
                                     </div>
 
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_4"> Parámetros </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse_4" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="tab-content">
+                                                    <form action="#" id="form_parametros" class="horizontal-form" enctype="multipart/form-data" autocomplete="off">
+                                                        <div class="form-body">                                                            
+                                                            <?php
+                                                            //CONSULTAMOS LA TABLA DE PARÁMETROS
+                                                            $resultado = $mysqli->query("SELECT * FROM parametros"); 
+                                                            $indice = 0;
+                                                            $arraySelectDestinosPedido = array();
+                                                            $arrayDestinosPedido = array();
+                                                            $arrayLlegaCorreoVendedor = array();
+
+                                                            while($row = mysqli_fetch_array($resultado)){
+                                                                if($indice == 0){
+                                                                    $arraySelectDestinosPedido = array($row['clave'],$row['valor'],$row['activo']);
+
+                                                                    $arr1 = explode(';',$row['valor']);
+
+                                                                    foreach($arr1 as $option){
+                                                                        $arr2 = explode(',',$option);
+                                                                        $arrayDestinosPedido[$arr2[0]] = $arr2[1];
+                                                                    }
+                                                                }else if($indice == 1){
+                                                                    $arrayLlegaCorreoVendedor = array($row['clave'],$row['valor'],$row['activo']);
+                                                                }
+
+                                                                $indice ++;
+                                                            }
+
+                                                            ?>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">Lista de Destinos Pedido</label>
+                                                                        <input type="checkbox" id="select_destinos_pedido" value="" <?php echo $arraySelectDestinosPedido[2] == 1 ? "checked" : "" ?>> 
+                                                                        <br><br>
+                                                                        <button class="btn btn-primary btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Nuevo" onclick="agregarDestino()"><i class="fa fa-plus"></i></button>
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th scope="col">Nombre</th>
+                                                                                    <th scope="col">Email</th>
+                                                                                    <th scope="col">Acción</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="destinos_pedido_body">
+                                                                                <?php 
+                                                                                    foreach ($arrayDestinosPedido as $clave=>$value){
+                                                                                ?>
+                                                                                        <tr>
+                                                                                            <td><?php echo $value; ?></td>
+                                                                                            <td><?php echo $clave; ?></td>
+                                                                                            <td><button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick="borrarDestino(this)"><i class="fa fa-trash"></i></button></td>
+                                                                                        </tr>
+                                                                                <?php 
+                                                                                    }
+                                                                                ?>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                    <label class="control-label">Llega Correo a Vendedor en Pedido</label>
+                                                                        <input type="checkbox" id="llega_correo_vendedor" value="" <?php echo $arrayLlegaCorreoVendedor[2] == 1 ? "checked" : "" ?>> 
+                                                                    </div>
+                                                                </div>    
+                                                            </div>
+
+                                                            <div class="margiv-top-10 form-actions">
+                                                                <button type="button" class="btn green" onclick="guardarParametros()">Guardar Cambios</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>                        
                         </div>
@@ -666,6 +753,101 @@ $pagina = 'configuracion';
                   ]
                 });
             });
+
+            //EVENTOS DE LA SECCIÓN DE LOS PARÁMETROS
+            function borrarDestino(btn){
+                var row = btn.parentNode.parentNode;
+                row.parentNode.removeChild(row);
+            }
+
+            function agregarDestino(){
+                var body = $('#destinos_pedido_body');
+                var ultimoNombre = $(".nombre_destino").last().val();
+                var ultimoCorreo = $(".correo_destino").last().val();
+
+                if(ultimoNombre == undefined && ultimoCorreo == undefined){
+                    body.append('<tr><td><input type="text" class="form-control nombre_destino" value=""/></td><td><input type="text" class="form-control correo_destino" value=""/></td><td><button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick="borrarDestino(this)"><i class="fa fa-trash"></i></button></td></tr>');
+                }else{
+                    if(ultimoNombre != "" && ultimoCorreo != ""){
+                        if(isEmail(ultimoCorreo)){
+                            $(".nombre_destino").last().prop('readonly', true);
+                            $(".correo_destino").last().prop('readonly', true);
+                            body.append('<tr><td><input type="text" class="form-control nombre_destino" value=""/></td><td><input type="text" class="form-control correo_destino" value=""/></td><td><button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Eliminar" onclick="borrarDestino(this)"><i class="fa fa-trash"></i></button></td></tr>');
+                        }else{
+                            alert("Ingrese por favor un correo válido.");
+                        }
+                    }else{
+                        alert("Debe llenar todos los campos para agregar un nuevo destino.");
+                    }
+                }
+            }
+
+            function isEmail(email) {
+                var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                return regex.test(email);
+            }
+
+            function guardarParametros(){
+                var ultimoNombre = $(".nombre_destino").last().val();
+                var ultimoCorreo = $(".correo_destino").last().val();
+
+                if(ultimoNombre == undefined && ultimoCorreo == undefined){
+                    salvarDatos();
+                }else{
+                    if(ultimoNombre != "" && ultimoCorreo != ""){
+                        if(isEmail(ultimoCorreo)){
+                            salvarDatos();
+                        }else{
+                            alert("Ingrese por favor un correo válido.");
+                        }
+                    }else{
+                        alert("Debe llenar todos los campos para guardar los parámetros.");
+                    }
+                }
+            }
+
+            function salvarDatos(){
+
+                var datos = [];
+                var datosCadena = "";
+
+                var arrayDataParametros = [];
+                var checkSelectDestinosPedido = 0;
+                var checkLlegaCorreoVendedor = 0;
+
+                $('#destinos_pedido_body tr').each(function() { 
+                    if($(this).find("td").eq(0).eq(0).text() != ""){
+                        datos.push(""+$(this).find("td").eq(1).eq(0).text()+","+$(this).find("td").eq(0).eq(0).text());
+                    }else{
+                        datos.push(""+$(this).find("td:eq(1) input[type='text']").val()+","+$(this).find("td:eq(0) input[type='text']").val());
+                    } 
+                });
+
+                datosCadena = datos.join(';');
+
+                if($('#select_destinos_pedido').is(':checked')){
+                    checkSelectDestinosPedido = 1;
+                }
+
+                if($('#llega_correo_vendedor').is(':checked')){
+                    checkLlegaCorreoVendedor = 1;
+                }
+
+                arrayDataParametros = [['SELECT_DESTINOS_PEDIDO',datosCadena,checkSelectDestinosPedido],['LLEGA_CORREO_VENDEDOR','N/A',checkLlegaCorreoVendedor]];
+
+                $.ajax({
+                    type: "POST",
+                    url: "configuracion_tab4.php",
+                    data: {'arrayDataParametros':arrayDataParametros},
+                    beforeSend: function(objeto){
+                        //
+                    },
+                    success: function(datos){
+                        alert(datos);
+                        location.reload();
+                    }
+                });
+            }
 
         </script>
     </body>
