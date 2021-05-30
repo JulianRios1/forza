@@ -40,8 +40,11 @@ if (isset($_GET['id']))//codigo elimina un elemento del array
 //CONSULTAMOS SI EL PARAMETRO DE ESCOGER DESTINO DEL PEDIDO ESTÁ HABILITADO, Y SI ES ASÍ CARGAR EL SELECT CON TODA LA INFO
 $destinos = array();
 
-if(isset($_SESSION['SELECT_DESTINOS_PEDIDO'])){
-	$valor_param = $_SESSION['SELECT_DESTINOS_PEDIDO'];
+$sql = $mysqli->query ("SELECT activo, valor FROM parametros WHERE clave = 'SELECT_DESTINOS_PEDIDO'");
+$row = mysqli_fetch_array($sql);
+
+if($row['activo'] == '1'){
+	$valor_param = $row['valor'];
 	$arr1 = explode(';',$valor_param);
 
 	foreach($arr1 as $option){
