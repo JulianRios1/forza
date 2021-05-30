@@ -59,15 +59,6 @@ if ($num_registros > 0)
 	$_SESSION["web"] = $row["web"];
 	$_SESSION["logo_cliente"] = $row["logo"];
 
-
-	//CARGAMOS LOS PARAMETROS DE LA APP
-	$sql= $mysqli->query ("SELECT * FROM parametros WHERE activo = 1");
-	while ($row=mysqli_fetch_array($sql))
-	{
-		$_SESSION[$row["clave"]] = $row["valor"];
-	}
-	///////////////////////////////////
-
     echo 1;
 
 }

@@ -26,7 +26,8 @@ if ($error_ins == true)
 {
   echo $actualizar;
 }
-else {
+else 
+{
   echo "Datos actualizados";
 }
 

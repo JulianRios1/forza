@@ -366,7 +366,12 @@ else {
     }
 
     //VALIDAMOS SI TIENE EL PARÁMETRO DE ENVIAR EL CORREO AL VENDEDOR
-    if(isset($_SESSION['LLEGA_CORREO_VENDEDOR'])){
+    $destinos = array();
+
+    $sql = $mysqli->query ("SELECT activo FROM parametros WHERE clave = 'LLEGA_CORREO_VENDEDOR'");
+    $row = mysqli_fetch_array($sql);
+
+    if($row['activo'] == '1'){
         $correo_vendedor = ",".$_SESSION["email_usu"];
     }
 
