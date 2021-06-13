@@ -395,7 +395,23 @@ else {
 	// Additional headers
 	$headers .= 'From: '.$GLOBALS['company'].' <'.$GLOBALS['mail_from'].'>' . "\r\n";
 	//$headers .= 'Cc: desarollo@imatiml.com'. "\r\n";
-    $headers .= "Bcc: ".$GLOBALS['mail_to'].$email_extra1.$email_extra2.$email_extra3.$correo_vendedor.$destino_adicional . "\r\n"; 
+    $headers .= "Bcc: ".$GLOBALS['mail_to'].$correo_vendedor.$destino_adicional.$email_extra1.$email_extra2.$email_extra3 . "\r\n"; 
+
+    //ACTUALIZAMOS EL CAMPO DE DESTINATARIOS
+    $resultado = $mysqli->query("SELECT MAX(idpedido) AS idMaximo FROM pedidos");
+	$row = mysqli_fetch_array($resultado);
+	$idMaximo = $row["idMaximo"];
+
+    $actualizar = "UPDATE pedidos SET destinatarios = '".$headers."' WHERE idpedido = ".$idMaximo;
+
+    if($mysqli->query($actualizar))
+    { 
+        $error_ins = false; 
+    }
+    else{
+        $error_ins = true;
+        $mysqli->rollBack(); 
+    }
 
 	// Send email
 	if(mail($to,$subject,$htmlContent,$headers)){
