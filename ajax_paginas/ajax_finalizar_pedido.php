@@ -413,6 +413,8 @@ else {
         $mysqli->rollBack(); 
     }
 
+    $mysqli->commit();
+
 	// Send email
 	if(mail($to,$subject,$htmlContent,$headers)){
 	  echo "0";
