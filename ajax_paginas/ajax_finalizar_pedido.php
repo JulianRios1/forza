@@ -395,7 +395,8 @@ else {
 	// Additional headers
 	$headers .= 'From: '.$GLOBALS['company'].' <'.$GLOBALS['mail_from'].'>' . "\r\n";
 	//$headers .= 'Cc: desarollo@imatiml.com'. "\r\n";
-    $headers .= "Bcc: ".$GLOBALS['mail_to'].$correo_vendedor.$destino_adicional.$email_extra1.$email_extra2.$email_extra3 . "\r\n"; 
+    // $headers .= "Bcc: ".$GLOBALS['mail_to'].$correo_vendedor.$destino_adicional.$email_extra1.$email_extra2.$email_extra3 . "\r\n"; 
+    $headers .= "Bcc: ".$correo_vendedor.$destino_adicional.$email_extra1.$email_extra2.$email_extra3 . "\r\n"; 
 
     //ACTUALIZAMOS EL CAMPO DE DESTINATARIOS
     $resultado = $mysqli->query("SELECT MAX(idpedido) AS idMaximo FROM pedidos");
