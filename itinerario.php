@@ -61,6 +61,7 @@ $pagina = 'itinerario';
                                                 <tr>
                                                     <th></th>
                                                     <th> Nombre </th>
+                                                    <th> Documento </th>
                                                     <th> Email </th>
                                                     <th> Dirección</th>
                                                     <!--<th> Teléfono </th>-->
@@ -151,6 +152,7 @@ $pagina = 'itinerario';
                 "columns": [
                     { "data": "icono" },
                     { "data": "nombre" },
+                    { "data": "documento" },
                     { "data": "mail" },
                     { "data": "dir" },
                     //{ "data": "tel" },
