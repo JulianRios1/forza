@@ -165,7 +165,7 @@ $usuario = explode(";", consulta_usuarios($row['usuarioRegistra']));
                                                                 </thead>
                                                                 <tbody>
                                                                     <?php 
-                                                                    $subtotal = '';
+                                                                    $subtotal = 0;
                                                                     $resultado = $mysqli->query("SELECT pp.idpedido_producto, p.desproducto, c.descategoria, pp.cantpedido_producto, pp.valproducto FROM pedidos_productos pp JOIN productos p ON pp.producto_idproducto = p.idproducto JOIN categorias c ON p.categoria_idcategoria = c.idcategoria WHERE pp.pedido_idpedido = ".$id);
                                                                     
                                                                     while($row_p = mysqli_fetch_array($resultado))

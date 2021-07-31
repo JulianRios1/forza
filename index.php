@@ -66,7 +66,7 @@ $pagina = 'inicio';
                                             $array_productos = $array_datos = array();
                                             $i_prod = 1;
                                             $resultado = $mysqli->query("SELECT p.idproducto, UPPER(p.desproducto) AS nombre, p.meta_producto FROM productos p WHERE p.destacado = 1 AND p.agotado = 0 AND p.oculto = 0 ORDER BY p.desproducto");
-                                            $num_productos = mysqli_num_rows($resultado);
+                                            $num_productos_mes = mysqli_num_rows($resultado);
                                             ?>
                                             <ul class="nav nav-pills">
                                                 <?php 
@@ -81,7 +81,7 @@ $pagina = 'inicio';
                                                                                                                
 
                                                         //CONSULTAMOS LAS CANTIDADES DE LOS PRODUCTOS VENDIDAS POR ZONA
-                                                        $resultado_ventas = $mysqli->query("SELECT COALESCE(SUM(pp.cantpedido_producto),0) AS cantidad FROM pedidos_productos pp JOIN pedidos p ON pp.pedido_idpedido = p.idpedido JOIN medicos m ON p.usuario_idusuario = m.usuario_id WHERE pp.producto_idproducto = ".$row['idproducto']." AND m.zona =".$row_zonas['id']." AND YEAR(p.fecpedido) = ".date('Y')." AND MONTH(p.fecpedido) = ".date('m'));
+                                                        $resultado_ventas = $mysqli->query("SELECT COALESCE(SUM(pp.cantpedido_producto),0) AS cantidad FROM pedidos_productos pp JOIN pedidos p ON pp.pedido_idpedido = p.idpedido JOIN medicos m ON p.usuario_idusuario = m.usuario_id WHERE pp.producto_idproducto = ".$row['idproducto']." AND m.zona =".$row_zonas['id']." AND p.estadopedido = 5 AND YEAR(p.fecpedido) = ".date('Y')." AND MONTH(p.fecpedido) = ".date('m'));
                                                         $row_ventas = mysqli_fetch_array($resultado_ventas);
 
                                                         $array_vacio .= '{"name": "'.$row_zonas["des"].'","points": '.$row_ventas['cantidad'].',"color":"'.color_random().'"},';
@@ -103,7 +103,7 @@ $pagina = 'inicio';
                                         </div>
                                         <div class="tab-content">
                                         <?php                                         
-                                        for ($i=1; $i <=$num_productos ; $i++) { 
+                                        for ($i=1; $i <=$num_productos_mes ; $i++) { 
                                             ?>
                                             <div class="tab-pane <?php if($i == 1) echo 'active'; ?>" id="tab_prod_<?php echo $i?>">                                            
                                                 <div id="chartprod_<?php echo $i?>" class="chart" style="height: 270px;"> </div>
@@ -152,7 +152,7 @@ $pagina = 'inicio';
                                                         
 
                                                         //CONSULTAMOS LAS CANTIDADES DE LOS PRODUCTOS VENDIDAS POR ZONA
-                                                        $resultado_ventas = $mysqli->query("SELECT COALESCE(SUM(pp.cantpedido_producto),0) AS cantidad FROM pedidos_productos pp JOIN pedidos p ON pp.pedido_idpedido = p.idpedido JOIN medicos m ON p.usuario_idusuario = m.usuario_id WHERE pp.producto_idproducto = ".$row['idproducto']." AND YEAR(p.fecpedido) = ".date('Y')." AND MONTH(p.fecpedido) = ".date('m'));
+                                                        $resultado_ventas = $mysqli->query("SELECT COALESCE(SUM(pp.cantpedido_producto),0) AS cantidad FROM pedidos_productos pp JOIN pedidos p ON pp.pedido_idpedido = p.idpedido JOIN medicos m ON p.usuario_idusuario = m.usuario_id WHERE pp.producto_idproducto = ".$row['idproducto']." AND p.estadopedido = 5 AND YEAR(p.fecpedido) = ".date('Y')." AND MONTH(p.fecpedido) = ".date('m'));
                                                         $row_ventas = mysqli_fetch_array($resultado_ventas);
 
                                                         $array_meta.= '{"name": "'.$row["nombre"].'","points": '.$row_ventas['cantidad'].', "meta":'.$row['meta_producto'].',"color":"'.color_random().'"},';
@@ -175,7 +175,7 @@ $pagina = 'inicio';
                                                         
 
                                                         //CONSULTAMOS LAS CANTIDADES DE LOS PRODUCTOS VENDIDAS POR ZONA
-                                                        $resultado_ventas = $mysqli->query("SELECT COALESCE(SUM(pp.cantpedido_producto),0) AS cantidad FROM pedidos_productos pp JOIN pedidos p ON pp.pedido_idpedido = p.idpedido JOIN medicos m ON p.usuario_idusuario = m.usuario_id WHERE pp.producto_idproducto = ".$row['idproducto']." AND YEAR(p.fecpedido) = ".date('Y')." AND MONTH(p.fecpedido) = ".date('m'));
+                                                        $resultado_ventas = $mysqli->query("SELECT COALESCE(SUM(pp.cantpedido_producto),0) AS cantidad FROM pedidos_productos pp JOIN pedidos p ON pp.pedido_idpedido = p.idpedido JOIN medicos m ON p.usuario_idusuario = m.usuario_id WHERE pp.producto_idproducto = ".$row['idproducto']." AND p.estadopedido = 5 AND YEAR(p.fecpedido) = ".date('Y')." AND MONTH(p.fecpedido) = ".date('m'));
                                                         $row_ventas = mysqli_fetch_array($resultado_ventas);
 
                                                         $array_meta_v.= '{"name": "'.$row["nombre"].'","points": '.$row_ventas['cantidad'].', "meta":'.$row['meta_producto'].',"color":"'.color_random().'"},';
@@ -1232,7 +1232,7 @@ JOIN zonas z ON m.zona = z.id JOIN usuarios u ON v.usuario_id = u.id WHERE v.com
         /*==================  FIN =================*/
         
         <?php 
-        for($j=1; $j<=$num_productos; $j++)
+        for($j=1; $j<=$num_productos_mes; $j++)
         {
             ?>
             var chart = AmCharts.makeChart("chartprod_<?php echo $j?>",
