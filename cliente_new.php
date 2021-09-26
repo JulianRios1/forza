@@ -227,7 +227,7 @@ $pagina = '';
                                                                                 <select name="zona" id="zona" class="form-control">
                                                                                     <option value="">-Seleccione-</option>
                                                                                     <?php 
-                                                                                    $resultado_zona = $mysqli->query("SELECT id, des FROM zonas ORDER BY des");
+                                                                                    $resultado_zona = $mysqli->query("SELECT id, des FROM zonas WHERE id_vendedor = ".$_SESSION["idusuario"]." ORDER BY des");
                                                                                     while($row_zona = mysqli_fetch_array($resultado_zona))
                                                                                     {
                                                                                     ?>

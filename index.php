@@ -482,7 +482,7 @@ $pagina = 'inicio';
                                                                 <span class="mt-comment-date"><?php echo calcula_tiempo(strtotime(date($row3['fecha'].' '.$row3['hora'])));?></span>
                                                             </div>
                                                             <?php echo date($row3['fecha'].' '.$row3['hora']) ?>
-                                                            <div class="mt-comment-text"> <?php echo $row3['observacion']; ?> </div>
+                                                            <div class="mt-comment-text"> <?php echo str_replace("<","",$row3['observacion']); ?> </div>
                                                             <div class="mt-comment-details">
                                                                 <span class="mt-comment-status mt-comment-status-pending"><?php echo $vendedor3[0]; ?></span>
                                                                 <ul class="mt-comment-actions">

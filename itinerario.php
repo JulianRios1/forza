@@ -127,7 +127,7 @@ $pagina = 'itinerario';
             var oTable = table.dataTable({
                 
                 initComplete: function () {
-                    this.api().column(5).every( function () {
+                    this.api().column(6).every( function () {
                         var column = this;
                         var select = $('<select><option value=""></option></select>')
                             .appendTo( $(column.header()).empty() )
