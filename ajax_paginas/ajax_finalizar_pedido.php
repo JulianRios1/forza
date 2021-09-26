@@ -1,5 +1,5 @@
 <?php 
-@session_start();
+session_start();
 include('../conexion.php');
 include('../includes/parametros.php');
 include('../funciones/fechas.php');
@@ -30,6 +30,12 @@ $mysqli->autocommit(false);
 $respuesta = new stdClass();
 
 $session_id = session_id();
+
+//VALIDAMOS QUE LA SESIÓN SIGA ACTIVA
+if (!isset($_SESSION["idusuario"]) || $_SESSION["idusuario"] == ''){
+    echo "-1";
+    return false;
+}
 
 //INSERTAMOS EL PEDIDO
 $insertar = "INSERT INTO `pedidos` (`usuario_idusuario`, `estadopedido`, `iva`, `total`, `descuento`, `fecpedido`, `observacion`, `usuarioRegistra`) VALUES ($id, 2, 0, $total, 0, CURRENT_TIMESTAMP(), '$obs', '".$_SESSION["idusuario"]."')";
@@ -93,7 +99,7 @@ else {
 	//ENVIAMOS EL EMAIL
 	
 	//CONSULTAMOS LOS DATOS DE LA ORDEN DE PEDIDO
-	$resultado = $mysqli->query("SELECT p.idpedido, UPPER(CONCAT_WS(' ',u.nom, u.ape1, u.ape2)) AS cliente, u.dir, u.cel, u.tel, u.mail, p.fecpedido, p.usuarioRegistra, p.estadopedido, p.observacion FROM pedidos p JOIN usuarios u ON p.usuario_idusuario = u.id WHERE p.idpedido = ".$id_pedido_nuevo);
+	$resultado = $mysqli->query("SELECT p.idpedido, UPPER(CONCAT_WS(' ',u.nom, u.ape1, u.ape2)) AS cliente, u.documento, u.dir, u.cel, u.tel, u.mail, p.fecpedido, p.usuarioRegistra, p.estadopedido, p.observacion FROM pedidos p JOIN usuarios u ON p.usuario_idusuario = u.id WHERE p.idpedido = ".$id_pedido_nuevo);
 	$row = mysqli_fetch_array($resultado);
 	$dato = $row['fecpedido'];
 	$fecha = date('Y-m-d',strtotime($dato));
@@ -301,6 +307,7 @@ else {
     <h1>CLIENTE</h1>
     <address contenteditable>
         <p>'.$row['cliente'].'</p>
+        <p>'.$row['documento'].'</p>
         <p>'.$row['dir'].'</p>
         <p>'.$row['tel'].'</p>
         <p>'.$row['mail'].'</p>

@@ -175,16 +175,21 @@ $('#accion').click(function(){
         success: function(datos){
             //$("#resultados").html(datos);
             //console.log(datos);
-            if(datos == 0)
+            if(datos == "0")
             {
-            	$("#resultados").html('Enviado');
+            	$("#resultados").html('Enviado.');
             	location.href= "pedido_add.php";
             }
-            else
-            {
-            	$("#resultados").html('El correo no pudo ser enviado.');
-            	setTimeout("location.href='pedido_add.php'", 5000);
-            }
+			else if(datos == "-1")
+			{
+				$("#resultados").html('No fue posible crear la orden. Sesión caducada, debe iniciar sesión nuevamente.');
+            	setTimeout("location.href='cerrar_sesion.php'", 5000);
+			}
+			else
+			{
+				$("#resultados").html('El correo no pudo ser enviado.');
+            	// setTimeout("location.href='pedido_add.php'", 5000);
+			}
         }
     });
 });
