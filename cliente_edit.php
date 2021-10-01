@@ -261,7 +261,17 @@ extract ($_GET);
                                                                             <select name="zona" id="zona" class="form-control">
                                                                                 <option value="">-Seleccione-</option>
                                                                                 <?php 
-                                                                                $resultado_zona = $mysqli->query("SELECT id, des FROM zonas WHERE id_vendedor = ".$_SESSION["idusuario"]." ORDER BY des");
+                                                                                $resultado_rol = $mysqli->query("SELECT idrol FROM usuarios WHERE id = ".$_SESSION["idusuario"]);
+                                                                                $resultado_rol_arr= mysqli_fetch_array($resultado_rol);
+                                                                                $rol = $resultado_rol_arr["idrol"];
+
+                                                                                if($rol != 1){
+                                                                                    $query = "SELECT id, des FROM zonas ORDER BY des";
+                                                                                }else{
+                                                                                    $query = "SELECT id, des FROM zonas WHERE id_vendedor = ".$_SESSION["idusuario"]." ORDER BY des";
+                                                                                }
+
+                                                                                $resultado_zona = $mysqli->query($query);
                                                                                 while($row_zona = mysqli_fetch_array($resultado_zona))
                                                                                 {
                                                                                 ?>
