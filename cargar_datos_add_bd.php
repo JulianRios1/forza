@@ -7,6 +7,7 @@ extract($_POST);
 if(isset($mes))
 {
 	$error_ins = false;
+	$error_formato = false;
 	$mysqli->autocommit(false);
 	$respuesta = new stdClass();
 	$fotoArchivo = $nombreArchivo ='';
@@ -74,6 +75,10 @@ if(isset($mes))
 				$dato4 = $sheet->getCell("D".$row)->getValue();
 				$dato5 = $sheet->getCell("E".$row)->getValue();
 
+				if(strlen($dato1) == 0 || strlen($dato2) == 0 || strlen($dato3) == 0 || strlen($dato4) == 0 || strlen($dato5) == 0){
+					$error_formato = true;
+				}
+
 				$insertar = "INSERT INTO cartera_usuarios(cliente_doc, mes, ano, compra, pago, descuento, retefuente) VALUES ('$dato1', $mes, $ano, $dato2, $dato3, $dato4, $dato5)";
 				if($mysqli->query($insertar))
 				{ 
@@ -111,6 +116,10 @@ if(isset($mes))
 	}else{  
 		$error_ins = true;
 		$mysqli->rollBack();
+	}
+
+	if($error_formato === true){
+		echo "Favor llenar todas las columnas (5) del formato excel.";
 	}
 
 	$mysqli->commit();
