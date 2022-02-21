@@ -11,7 +11,7 @@ if(isset($validar))
   $respuesta = new stdClass();
 
 
-  $actualizar = "UPDATE `visitas` SET `comentario`= '$comentario', `estado`= $validar, `usuario_id_com`= ".$_SESSION['idusuario'].", fecha_ver_com = CURRENT_TIMESTAMP() WHERE id = $hdd_id";
+  $actualizar = "UPDATE `visitas` SET `accion`= '$accion', `observacion`= '$observacion', `prioridad`= '$prioridad', `contacto`= $contacto, `comentario`= '$comentario', `estado`= $validar, `usuario_id_com`= ".$_SESSION['idusuario'].", fecha_ver_com = CURRENT_TIMESTAMP() WHERE id = $hdd_id";
 
   if($mysqli->query($actualizar))
   { 

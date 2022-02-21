@@ -192,7 +192,7 @@ extract($_GET);
                                                                     <div class="col-md-12">
                                                                         <div class="form-group">
                                                                             <label class="control-label col-md-2">Acción</label>
-                                                                            <div class="col-md-10"><textarea name="observacion" id="observacion" cols="30" rows="3" class="form-control"><?php echo $row['accion'] ?></textarea></div>
+                                                                            <div class="col-md-10"><textarea name="accion" id="accion" cols="30" rows="3" class="form-control"><?php echo $row['accion'] ?></textarea></div>
                                                                         </div>
                                                                     </div>
 
