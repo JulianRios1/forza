@@ -174,7 +174,7 @@ $('#accion').click(function(){
         },
         success: function(datos){
             //$("#resultados").html(datos);
-            //console.log(datos);
+            console.log(datos);
             if(datos == "0")
             {
             	$("#resultados").html('Enviado.');
@@ -185,10 +185,13 @@ $('#accion').click(function(){
 				$("#resultados").html('No fue posible crear la orden. Sesión caducada, debe iniciar sesión nuevamente.');
             	setTimeout("location.href='cerrar_sesion.php'", 5000);
 			}
+			else if(datos == "-2")
+			{
+				$("#resultados").html('Error en el servidor, intente nuevamente realizar el pedido.');
+			}
 			else
 			{
 				$("#resultados").html('El correo no pudo ser enviado.');
-            	// setTimeout("location.href='pedido_add.php'", 5000);
 			}
         }
     });

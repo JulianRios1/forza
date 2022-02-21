@@ -544,7 +544,7 @@ $pagina = '';
                                                     </div>
                                                 </div>
                                                 <div class="margiv-top-10 form-actions">
-                                                    <button type="submit" class="btn green">Guardar Cambios</button>
+                                                    <button type="submit" id="btnSubmit" class="btn green">Guardar Cambios</button>
                                                     <a href="itinerario.php" class="btn default"> Cancelar </a>
                                                 </div>
                                             </form>
@@ -667,13 +667,14 @@ $pagina = '';
                     },
 
                     submitHandler: function (form) {
+                        $("#btnSubmit").prop('disabled', true);
                         //success.show();
                         error.hide();
 
                         //var formulario = $('#add_participante').serializeArray();
                         var formData = new FormData(document.getElementById("form_cliente_nuevo"));
                         formData.append("dato", "valor");
-                        
+
                        $.ajax({
                             url: "cliente_add_bd.php",
                             type: "post",
