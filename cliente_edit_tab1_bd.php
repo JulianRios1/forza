@@ -52,9 +52,25 @@ if(isset($tipo_documento))
 
   if($mysqli->query($actualizar))
   { 
-    //SI SE ACTUALIZO EL USUARIO CORRECTAMENTE AHORA ACTUALIZAMOS LA INFORMACION DETALLADA DEL MEDICO
+    //ALISTAMOS LA INFORMACIÓN DE LOS MEDIOS DE INFORMACIÓN PREFERIDOS
+    $medios_info = "";
+    if(isset($mi_correo)){
+      $medios_info = $medios_info.$mi_correo."|";
+    }
+    if(isset($mi_llamada)){
+      $medios_info = $medios_info.$mi_llamada."|";
+    }
+    if(isset($mi_sms)){
+      $medios_info = $medios_info.$mi_sms."|";
+    }
+    if(isset($mi_whatsapp)){
+      $medios_info = $medios_info.$mi_whatsapp."|";
+    }
 
-    $actualizar_med = "UPDATE `medicos` SET `especialidad`= $especialidad, `genero`= '$genero', `dir`= UPPER('$dir'),`dir2`= UPPER('$dir2'), `barrio1`= UPPER('$barrio1'), `barrio2`= UPPER('$barrio2'), tel2='$tel2', ciudaddir2=$municipio2, zona=$zona, hor='$horario', mes_cum = $mes, dia_cum = $dia, hijos = $hijos, mail=LOWER('$mail'), cond='$condiciones', hobby='$hobby', proyecto='$proyecto', observacion='$observacion', habilitado=$habilitado, listaPrecios = $lista, `cliente_especial` = $cli_esp , `cliente_descuento` = $cli_des WHERE usuario_id = $hdd_id";
+    $medios_info = substr_replace($medios_info ,"", -1);
+
+    //SI SE ACTUALIZO EL USUARIO CORRECTAMENTE AHORA ACTUALIZAMOS LA INFORMACION DETALLADA DEL MEDICO
+    $actualizar_med = "UPDATE `medicos` SET `especialidad`= $especialidad, `genero`= '$genero', `dir`= UPPER('$dir'),`dir2`= UPPER('$dir2'), `barrio1`= UPPER('$barrio1'), `barrio2`= UPPER('$barrio2'), tel2='$tel2', ciudaddir2=$municipio2, zona=$zona, hor='$horario', mes_cum = $mes, dia_cum = $dia, hijos = $hijos, mail=LOWER('$mail'), cond='$condiciones', hobby='$hobby', proyecto='$proyecto', observacion='$observacion', habilitado=$habilitado, listaPrecios = $lista, `cliente_especial` = $cli_esp , `cliente_descuento` = $cli_des, medios_informacion='$medios_info' WHERE usuario_id = $hdd_id";
 
     if($mysqli->query($actualizar_med))
     {

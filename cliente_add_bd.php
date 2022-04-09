@@ -54,8 +54,25 @@ con_mes
     //CAPTURAMOS EL ID QUE SE LE DIO AL NUEVO USUARIO
     $id_cliente_nuevo = $mysqli->insert_id;
 
+    //ALISTAMOS LA INFORMACIÓN DE LOS MEDIOS DE INFORMACIÓN PREFERIDOS
+    $medios_info = "";
+    if(isset($mi_correo)){
+      $medios_info = $medios_info.$mi_correo."|";
+    }
+    if(isset($mi_llamada)){
+      $medios_info = $medios_info.$mi_llamada."|";
+    }
+    if(isset($mi_sms)){
+      $medios_info = $medios_info.$mi_sms."|";
+    }
+    if(isset($mi_whatsapp)){
+      $medios_info = $medios_info.$mi_whatsapp."|";
+    }
+
+    $medios_info = substr_replace($medios_info ,"", -1);
+
     //INSERTAMOS LOS DATOS DETALLADOS EN LA TABLA MEDICO
-    $insertar_med = "INSERT INTO `medicos` (`usuario_id`, `especialidad`, `zona`,`dir`, `dir2`, `ciudaddir2`, `barrio1`, `barrio2`, `tel2`,`mes_cum`,`dia_cum`, `hor`, `hijos`, `genero`, `contacto`, `con_dia`, `con_mes`, `cond`, `hobby`, `observacion`, `proyecto`, `directorio`, `univ_egresado`, `titulo`, `especializacion`, `especializacion2`, `especializacion3`, `univ_especial`, `univ_especial2`, `univ_especial3`, `resena`, `fechaCreacion`, `listaPrecios`, `cliente_especial`, `cliente_nuevo`) VALUES ($id_cliente_nuevo, $especialidad, $zona, UPPER('$dir'), UPPER('$dir2'), $municipio2, UPPER('$barrio1'), UPPER('$barrio2'),  '$tel2', $mes, $dia, '$horario', $hijos, '$genero', '$contacto', $dia_contacto, $mes_contacto, '$condiciones', '$hobby', '$observacion' , '$proyecto', $act_directorio, '$univ_egresado', '$titulo', '$especializacion', '$especializacion2', '$especializacion3', '$univ_especial' , '$univ_especial2', '$univ_especial3', '$resena', CURDATE(), $lista, $cli_esp, 1 )";
+    $insertar_med = "INSERT INTO `medicos` (`usuario_id`, `especialidad`, `zona`,`dir`, `dir2`, `ciudaddir2`, `barrio1`, `barrio2`, `tel2`,`mes_cum`,`dia_cum`, `hor`, `hijos`, `genero`, `contacto`, `con_dia`, `con_mes`, `cond`, `hobby`, `observacion`, `proyecto`, `directorio`, `univ_egresado`, `titulo`, `especializacion`, `especializacion2`, `especializacion3`, `univ_especial`, `univ_especial2`, `univ_especial3`, `resena`, `fechaCreacion`, `listaPrecios`, `cliente_especial`, `cliente_nuevo`, `medios_informacion`) VALUES ($id_cliente_nuevo, $especialidad, $zona, UPPER('$dir'), UPPER('$dir2'), $municipio2, UPPER('$barrio1'), UPPER('$barrio2'),  '$tel2', $mes, $dia, '$horario', $hijos, '$genero', '$contacto', $dia_contacto, $mes_contacto, '$condiciones', '$hobby', '$observacion' , '$proyecto', $act_directorio, '$univ_egresado', '$titulo', '$especializacion', '$especializacion2', '$especializacion3', '$univ_especial' , '$univ_especial2', '$univ_especial3', '$resena', CURDATE(), $lista, $cli_esp, 1, '$medios_info')";
 
     if($mysqli->query($insertar_med))
     {
