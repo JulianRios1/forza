@@ -275,6 +275,20 @@ $pagina = '';
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label>Medios preferidos para recibir información</label>
+                                                                                <div class="input-group">
+                                                                                    <div class="icheck-list">
+                                                                                        <label><div class="icheckbox_flat-green checked" style="position: relative;"><input type="checkbox" class="icheck" name="mi_correo" data-checkbox="icheckbox_flat-green" value="correo" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>Email</label>
+                                                                                        <label><div class="icheckbox_flat-green checked" style="position: relative;"><input type="checkbox" class="icheck" name="mi_llamada" data-checkbox="icheckbox_flat-green" value="llamada" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>Llamada</label>
+                                                                                        <label><div class="icheckbox_flat-green checked" style="position: relative;"><input type="checkbox" class="icheck" name="mi_sms" data-checkbox="icheckbox_flat-green" value="sms" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>Mensaje de texto</label>
+                                                                                        <label><div class="icheckbox_flat-green checked" style="position: relative;"><input type="checkbox" class="icheck" name="mi_whatsapp" data-checkbox="icheckbox_flat-green" value="whatsapp" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>WhatsApp</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                         
                                                                     </div>
 
